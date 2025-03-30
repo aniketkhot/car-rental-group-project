@@ -1,15 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import CarList from "./components/CarList";
+import CustomerList from "./components/CustomerList";
+import RentalList from "./components/RentalList";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
-
 import PrivateRoute from "./components/PrivateRoute";
-import CarList from "./components/CarList";
-import CustomerList from "./components/CustomerList";
-
 
 function App() {
   return (
@@ -28,6 +26,10 @@ function App() {
             <Route
               path="/customers"
               element={<PrivateRoute element={<CustomerList />} />}
+            />
+            <Route
+              path="/rentals"
+              element={<PrivateRoute element={<RentalList />} />}
             />
           </Routes>
         </div>

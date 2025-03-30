@@ -25,6 +25,7 @@ app.get('/api/test', (req, res) => {
   res.json({ message: "Backend is working 1212✅" });
 });
 
+app.use('/api/rentals', require('./routes/rentalRoutes'));
 
 // Export the app object for testing
 if (require.main === module) {
