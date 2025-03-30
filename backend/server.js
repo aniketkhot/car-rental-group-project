@@ -15,6 +15,16 @@ app.use('/api/auth', require('./routes/authRoutes'));
 //app.use('/api/tasks', require('./routes/taskRoutes'));
 
 app.use('/api/cars', require('./routes/carRoutes'));
+app.use('/api/customers', require('./routes/customerRoutes'));
+
+
+app.get('/hello', (req, res) => {
+  res.send("Hello World!");
+});
+app.get('/api/test', (req, res) => {
+  res.json({ message: "Backend is working 1212✅" });
+});
+
 
 // Export the app object for testing
 if (require.main === module) {
