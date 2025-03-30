@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 
 import PrivateRoute from "./components/PrivateRoute";
 import CarList from "./components/CarList";
+import CustomerList from "./components/CustomerList";
 
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
             <Route
               path="/cars"
               element={<PrivateRoute element={<CarList />} />}
+            />
+            <Route
+              path="/customers"
+              element={<PrivateRoute element={<CustomerList />} />}
             />
           </Routes>
         </div>
