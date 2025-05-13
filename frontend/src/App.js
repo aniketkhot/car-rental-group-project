@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import LandingPage from "./components/landingpages";
 
 function App() {
   return (
@@ -16,9 +17,10 @@ function App() {
         <Navbar />
         <div className="container mt-4">
           <Routes>
+            <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route
               path="/cars"
               element={<PrivateRoute element={<CarList />} />}

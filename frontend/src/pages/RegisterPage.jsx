@@ -27,37 +27,59 @@ function RegisterPage() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          className="form-control mb-2"
-          placeholder="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          className="form-control mb-2"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          className="form-control mb-2"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button className="btn btn-primary">Register</button>
-      </form>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '50vh', 
+        marginTop: '20%', 
+        backgroundColor: '#fff',
+          boxShadow: '0 4px 8px rgba(0,0,0,10.10)',
+      }}
+    >
+      <div className="content-box" style={{ width: '100%', maxWidth: '400px'  }}>
+      <div style={{ textAlign: 'center' }}>
+  <h2>New customers?</h2>
+  <p>Welcome to join us</p>
+</div>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="name"
+            className="form-control mb-2"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            className="form-control mb-2"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            className="form-control mb-2"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button  style={{
+                padding: '4px 175px',
+                backgroundColor: '#F96E2A',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1em',
+              }}className="btn btn-primary w-100">Register</button>
+        </form>
+      </div>
     </div>
   );
 }
