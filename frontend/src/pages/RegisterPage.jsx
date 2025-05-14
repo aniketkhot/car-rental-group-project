@@ -35,13 +35,13 @@ function RegisterPage() {
            height: '100vh', 
         flexDirection: 'column',
         marginTop: 'flex',
-        
+        fontFamily: 'Roboto Slab, serif',
         backgroundColor: '#FBF8EF',
           
       }}
     >
       <div className="content-box" style={{ width: '100%', maxWidth: '400px'  }}>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center' ,fontFamily: 'Roboto Slab, serif',}}>
   <h2>New customers?</h2>
   <p>Welcome to join us</p>
 </div>

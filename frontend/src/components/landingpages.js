@@ -167,6 +167,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
+    fontFamily: 'Roboto Slab, serif',
   },
   input: {
     width: '100%',
@@ -174,6 +175,7 @@ const styles = {
     borderRadius: '10px',
     border: '1px solid #ccc',
     fontSize: '1em',
+    fontFamily: 'Roboto Slab, serif',
   },
   timeContainer: {
     display: 'flex',
@@ -205,6 +207,7 @@ function PopularCars() {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
     gap: "1rem",
+    fontFamily: 'Roboto Slab, serif',
   };
 
   const cardStyle = {

@@ -38,14 +38,14 @@ function LoginPage() {
         flexDirection: 'column',
         marginTop: 'flex',
         backgroundColor: '#FBF8EF',
-        
+        fontFamily: 'Roboto Slab, serif',
         borderRadius: '10px',
         padding: '20px'
       }}
     >
       <div className="content-box" style={{ width: '100%', maxWidth: '400px' }}>
   
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px',fontFamily: 'Roboto Slab, serif', }}>
           <h2>Welcome Back</h2>
         </div>
         
@@ -57,6 +57,7 @@ function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ fontFamily: 'Roboto Slab, serif',}}
           />
           <input
             type="password"
@@ -76,6 +77,7 @@ function LoginPage() {
               borderRadius: '4px',
               cursor: 'pointer',
               fontSize: '1em',
+              fontFamily: 'Roboto Slab, serif',
             }}
             className="btn btn-primary w-100"
           >

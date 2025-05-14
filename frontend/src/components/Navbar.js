@@ -19,7 +19,7 @@ function Navbar() {
   };
 
   return (
-          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#78B3CE' }}>
             <div className="container-fluid">
               <NavLink className="navbar-brand" to="/">
                 Car Rental System
