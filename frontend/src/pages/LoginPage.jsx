@@ -9,7 +9,7 @@ function LoginPage() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/cars";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const handleLogin = async (e) => {
     e.preventDefault();
