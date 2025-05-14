@@ -7,24 +7,25 @@ function LandingPage() {
       <div style={styles.imageContainer}>
         <img src={landingimage} alt="Landing" style={styles.image} />
       </div>
-    
+
+
       <div style={styles.textContainer}>
         <div style={{
           backgroundColor: '#78B3CE',
-        
-          padding: '10px',
+          padding: '20px',
           borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0,0,0,10.10)',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+          maxWidth: '600px',
+          margin: '0 auto',
         }}>
           <h1 style={styles.heading}>Looking for convenient car rental services?</h1>
           <p style={styles.paragraph}>
-            We make booking quick and easy, search for your rental car now 
-            and start your journey!<br/><br/>
+            We make booking quick and easy, search for your rental car now and start your journey!<br/><br/>
             Register to be a member to get a 10% off discount!
           </p>
-         </div>
-       
-        <div style={{ marginTop: '20px' }}>
+        </div>
+
+        <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <input
             type="text"
             placeholder="Car type"
@@ -32,72 +33,71 @@ function LandingPage() {
               width: '100%',
               padding: '10px',
               borderRadius: '10px',
-              border: '1px solid #ccc',
-              marginTop: '10px', 
-              marginBottom: '10px'
-            }}/>
-             <input
+              border: '1px solid #ccc'
+            }}
+          />
+          <input
             type="text"
-            placeholder="pick up location"
+            placeholder="Pick up location"
             style={{
               width: '100%',
               padding: '10px',
               borderRadius: '10px',
-              border: '1px solid #ccc',
-                marginBottom: '10px'
+              border: '1px solid #ccc'
             }}
           />
-                <input
-          type="text"
-          placeholder="pick up time"
-          style={{
-            flex: 1,
-            padding: '10px',
-            borderRadius: '10px',
-            border: '1px solid #ccc',
-            width: '49%', 
-            marginRight: '10px',
-        
-          }}
-        />
-        <input
-          type="text"
-          placeholder="drop of times"
-          style={{
-            flex: 1,
-            padding: '10px',
-            borderRadius: '10px',
-            border: '1px solid #ccc',
-            width: '49%',
           
-          }}
-        />
-        <div style={{ marginTop: '20px', textAlign: '' }}>
-            <button
+        
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <input
+              type="text"
+              placeholder="Pick up time"
               style={{
-                padding: '12px 175px',
-                backgroundColor: '#F96E2A',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '1em',
-                marginLeft: '400px',
+                flex: 1,
+                padding: '10px',
+                borderRadius: '10px',
+                border: '1px solid #ccc'
               }}
-            >
-              Book Now!!
-            </button>
-                  
-                
-   </div>
-            </div>
-           
+            />
+            <input
+              type="text"
+              placeholder="Drop off time"
+              style={{
+                flex: 1,
+                padding: '10px',
+                borderRadius: '10px',
+                border: '1px solid #ccc'
+              }}
+            />
           </div>
-                </div>
-        );
-        
           
-      }
+          
+          <button
+            style={{
+              margin: '20px auto',
+              padding: '12px',
+              width: '200px',
+              backgroundColor: '#F96E2A',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '1em',
+            }}
+          >
+            Book Now!!
+          </button>
+          
+        </div>
+        
+      </div>
+    </div>
+    
+  );
+  
+}
+
+
 
 const styles = {
   container: {
@@ -105,15 +105,16 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '50px',
-    backgroundColor: '#fff',
+    backgroundColor: '#FBF8EF',
     minHeight: '100vh',
-    marginTop: '-320px',
+    flexWrap: 'wrap', 
   },
   imageContainer: {
     flex: 1,
-    padding: '5px',
-    marginTop: '20px'
+    maxWidth: '600px',
+    marginRight: '20px',
   },
+ 
   image: {
     width: '100%',
     height: '100%',
@@ -140,5 +141,61 @@ const styles = {
     
   },
 };
+function PopularCars() {
+  const cars = [
+    { name: "Toyota Corolla", img: "/toyota2.png" },
+    { name: "Audi", img: "/Audi.png" },
+    { name: "Jeep Wrangler", img: "/Jeep Wrangler.png" },
+    { name: "Nissan Versa", img: "/Nissan Versa.png" },
+  ];
 
-export default LandingPage;
+  return (
+    <section style={{ padding: "2rem" }}>
+      <h3 style={{ fontWeight: "bold", fontSize: "1.25rem", marginBottom: "1rem" }}>Today’s Popular</h3>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "flex",
+        }}
+      >
+        {cars.map((car, idx) => (
+          <div
+            key={idx}
+            style={{
+              backgroundColor: "#fff",
+              textAlign: "center",
+              borderRadius: "6px",
+              padding: "1rem",
+              boxShadow: "0px 0px 10px 10px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+            <img src={car.img} alt={car.name} style={{ height: "100px" }} />
+            <p style={{ marginTop: "0.5rem" }}>{car.name}</p>
+            <button
+              style={{
+                backgroundColor: "#F96E2A",
+                color: "white",
+                padding: "0.3rem 1rem",
+                border: "none",
+                borderRadius: "6px",
+                marginTop: "0.5rem",
+              }}
+            >
+              More
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function MainPage() {
+  return (
+    <div>
+      <LandingPage />
+      <PopularCars />
+    </div>
+  );
+}

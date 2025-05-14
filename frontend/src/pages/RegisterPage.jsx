@@ -32,10 +32,12 @@ function RegisterPage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '50vh', 
-        marginTop: '20%', 
-        backgroundColor: '#fff',
-          boxShadow: '0 4px 8px rgba(0,0,0,10.10)',
+           height: '100vh', 
+        flexDirection: 'column',
+        marginTop: 'flex',
+        
+        backgroundColor: '#FBF8EF',
+          
       }}
     >
       <div className="content-box" style={{ width: '100%', maxWidth: '400px'  }}>
