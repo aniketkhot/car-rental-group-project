@@ -8,7 +8,7 @@ function CustomerDashboard() {
         backgroundColor: "#FBF8EF",
       }}
     >
-      {/* message section */}
+      {/* message */}
       <section className="p-6 text-black text-lg">
         <div
           className="p-6 max-w-4xl mx-auto bg-white rounded-lg"
@@ -16,10 +16,10 @@ function CustomerDashboard() {
             boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)",
           }}
         >
-          <p className="font-semibold">No active rentals.</p>
-          <p className="font-semibold">You last rented Toyota Corolla</p>
-          <p className="font-semibold">12 days ago</p>
-          <p className="font-semibold mt-2">
+          <p className="semi-bold">No active rentals.</p>
+          <p>You last rented Toyota Corolla</p>
+          <p>12 days ago</p>
+          <p className="semi-bold mt-2">
             Ready to book your next adventure ?
           </p>
           <img
@@ -29,7 +29,7 @@ function CustomerDashboard() {
           />
           <div className="text-center">
             <button
-              className="px-5 py-2 rounded text-white font-semibold"
+              className="px-5 py-2 rounded text-white"
               style={{ backgroundColor: "#F96E2A" }}
             >
               Browser Again
@@ -38,9 +38,9 @@ function CustomerDashboard() {
         </div>
       </section>
 
-      {/* today's popular section */}
+      {/* todays popular */}
       <section className="p-6 text-black text-lg">
-        <h3 className="font-semibold text-xl mb-2">Today’s Popular</h3>
+        <h3 className="semi-bold text-xl mb-2">Today’s Popular</h3>
         <div className="grid grid-cols-4 gap-4">
           {[
             { name: "Toyota Corolla", img: "/toyota2.png" },
@@ -60,9 +60,9 @@ function CustomerDashboard() {
                 alt={car.name}
                 className="h-24 mx-auto mb-2"
               />
-              <p className="mt-2 font-semibold">{car.name}</p>
+              <p className="mt-2">{car.name}</p>
               <button
-                className="mt-2 px-4 py-1 rounded text-white font-semibold"
+                className="mt-2 px-4 py-1 rounded text-white"
                 style={{ backgroundColor: "#F96E2A" }}
               >
                 More
@@ -72,14 +72,9 @@ function CustomerDashboard() {
         </div>
       </section>
 
-      {/* footer section */}
-      <footer
-        className="text-center p-4 mt-6"
-        style={{ backgroundColor: "#78B3CE" }}
-      >
-        <p className="font-semibold mb-2">
-          FOLLOW US ON OUR SOCIAL NETWORKS
-        </p>
+      {/* footer */}
+      <footer className="text-center p-4 mt-6" style={{ backgroundColor: "#78B3CE" }}>
+        <p className="font-bold mb-2">FOLLOW US ON OUR SOCIAL NETWORKS</p>
         <div className="flex justify-center gap-4">
           <img src="/discord.png" alt="Discord" className="h-6" />
           <img src="/facebook.png" alt="Facebook" className="h-6" />

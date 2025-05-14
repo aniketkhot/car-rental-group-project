@@ -16,7 +16,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 
 app.use('/api/cars', require('./routes/carRoutes'));
 app.use('/api/customers', require('./routes/customerRoutes'));
-
+app.use('/api/rental-records', require('./routes/RentalRecordRoutes'));
 
 app.get('/hello', (req, res) => {
   res.send("Hello World!");
