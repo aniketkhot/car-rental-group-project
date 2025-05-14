@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
+import CustomerDashboard from "./components/CustomerDashboard";
 
 function App() {
   return (
@@ -21,17 +22,22 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<LandingPage />} />
+
             <Route
               path="/cars"
-              element={<PrivateRoute element={<CarList />} />}
+              element={<PrivateRoute element={<CarList />} roles={['admin']} />}
             />
             <Route
               path="/customers"
-              element={<PrivateRoute element={<CustomerList />} />}
+              element={<PrivateRoute element={<CustomerList />} roles={['admin']} />}
             />
             <Route
               path="/rentals"
-              element={<PrivateRoute element={<RentalList />} />}
+              element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
+            />
+            <Route
+              path="/customer-dashboard"
+              element={<PrivateRoute element={<CustomerDashboard />} />}
             />
           </Routes>
         </div>

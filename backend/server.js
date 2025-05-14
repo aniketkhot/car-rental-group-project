@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const landingbookRoutes = require('./routes/landingbook');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get('/api/test', (req, res) => {
 
 app.use('/api/rentals', require('./routes/rentalRoutes'));
 
+app.use('/api/landingbook', landingbookRoutes);
 // Export the app object for testing
 if (require.main === module) {
     connectDB();

@@ -3,13 +3,14 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/cars";
+  const from = location.state?.from?.pathname || "/customer-dashboard";
 
   const handleLogin = async (e) => {
     e.preventDefault();

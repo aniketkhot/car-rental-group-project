@@ -1,23 +1,51 @@
-import React from 'react';
-import landingimage from './landingimage.png';
+import React, { useState } from 'react'
 
 function LandingPage() {
+  const [carType, setCarType] = useState('');
+  const [location, setLocation] = useState('');
+  const [pickupDate, setPickupDate] = useState('');
+  const [dropoffDate, setDropoffDate] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
+
+  const handleBook = async () => {
+   
+    if (!carType || !location || !pickupDate || !dropoffDate) {
+      alert('please fill in all fields');
+      return;
+    }
+
+    try {
+    const response = await fetch('http://localhost:5001/api/landingbook', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+    carId: carType,
+    customerId: 'sampleCustomerId',
+    pickupDate,
+    dropoffDate
+  }),
+});
+      const data = await response.json();
+      if (response.ok) {
+        setStatusMsg('booking sccuess！');  
+      } else {
+        setStatusMsg('booking fail：' + data.message);
+      }
+    } catch (err) {
+      setStatusMsg('error：' + err.message);
+    }
+  };
+
   return (
     <div style={styles.container}>
+
       <div style={styles.imageContainer}>
-        <img src={landingimage} alt="Landing" style={styles.image} />
+        <img src="./landingimage.png" alt="Landing" style={styles.image} />
       </div>
 
-
+      
       <div style={styles.textContainer}>
-        <div style={{
-          backgroundColor: '#78B3CE',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-          maxWidth: '600px',
-          margin: '0 auto',
-        }}>
+        <div style={styles.infoBox}>
           <h1 style={styles.heading}>Looking for convenient car rental services?</h1>
           <p style={styles.paragraph}>
             We make booking quick and easy, search for your rental car now and start your journey!<br/><br/>
@@ -25,120 +53,144 @@ function LandingPage() {
           </p>
         </div>
 
-        <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <input
-            type="text"
-            placeholder="Car type"
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '10px',
-              border: '1px solid #ccc'
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Pick up location"
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '10px',
-              border: '1px solid #ccc'
-            }}
-          />
-          
+       
+        <div style={styles.formContainer}>
         
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <select
+            value={carType}
+            onChange={(e) => setCarType(e.target.value)}
+            style={styles.input}
+          >
+            <option value="">SELECT CAR TYPE</option>
+            <option value="sedan">Sedan</option>
+            <option value="suv">SUV</option>
+            <option value="convertible">Convertible</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="Minivan">Minivan</option>
+          </select>
+
+     
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            style={styles.input}
+          >
+            <option value="">SELECT LOCATION</option>
+            <option value="BC">brisbane City</option>
+            <option value="SB">Sunnybank</option>
+            <option value="SBH">sunnybank hills</option>
+            <option value="TW">Toowong</option>
+          
+          </select>
+
+      
+          <div style={styles.timeContainer}>
             <input
-              type="text"
+              type="date"
               placeholder="Pick up time"
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '10px',
-                border: '1px solid #ccc'
-              }}
+              style={{ ...styles.input, flex: 1 }}
+              value={pickupDate}
+              onChange={(e) => setPickupDate(e.target.value)}
             />
             <input
-              type="text"
+              type="date"
               placeholder="Drop off time"
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '10px',
-                border: '1px solid #ccc'
-              }}
+              style={{ ...styles.input, flex: 1 }}
+              value={dropoffDate}
+              onChange={(e) => setDropoffDate(e.target.value)}
             />
           </div>
+
           
-          
-          <button
-            style={{
-              margin: '20px auto',
-              padding: '12px',
-              width: '200px',
-              backgroundColor: '#F96E2A',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '1em',
-            }}
-          >
-            Book Now!!
-          </button>
-          
+          <button style={styles.button} onClick={handleBook}>Book Now!!</button>
+
+         
+          {statusMsg && <p style={{marginTop: '10px', color: '#333'}}>{statusMsg}</p>}
         </div>
-        
       </div>
     </div>
-    
   );
-  
 }
-
-
-
 const styles = {
   container: {
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     padding: '50px',
     backgroundColor: '#FBF8EF',
     minHeight: '100vh',
-    flexWrap: 'wrap', 
   },
   imageContainer: {
     flex: 1,
     maxWidth: '600px',
     marginRight: '20px',
+    display: 'flex',
+    justifyContent: 'center',
   },
- 
   image: {
     width: '100%',
-    height: '100%',
+    height: 'auto',
     borderRadius: '8px',
-    
   },
   textContainer: {
     flex: 1.2,
-    
-    marginTop: '-200px'
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  infoBox: {
+    backgroundColor: '#78B3CE',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+    maxWidth: '600px',
+    width: '100%',
+    marginBottom: '20px',
+    textAlign: 'center',
   },
   heading: {
-    fontSize: '2.5em',
-    marginBottom: '5px',
-    color: '#333',  
-    fontFamily: 'Roboto Slab'
-    
+    fontSize: '2em',
+    marginBottom: '10px',
+    color: '#333',
+    fontFamily: 'Roboto Slab, serif',
   },
   paragraph: {
     fontSize: '1.2em',
-    lineHeight: '1',
+    lineHeight: '1.5',
     color: '#333',
-    fontFamily: 'Roboto Slab'
-    
+    fontFamily: 'Roboto Slab, serif',
+  },
+  formContainer: {
+    width: '100%',
+    maxWidth: '600px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    borderRadius: '10px',
+    border: '1px solid #ccc',
+    fontSize: '1em',
+  },
+  timeContainer: {
+    display: 'flex',
+    gap: '10px',
+  },
+  button: {
+    marginTop: '20px',
+    padding: '12px 20px',
+    width: '200px',
+    alignSelf: 'center',
+    backgroundColor: '#F96E2A',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '1em',
+    fontWeight: 'bold',
   },
 };
 function PopularCars() {
@@ -149,47 +201,53 @@ function PopularCars() {
     { name: "Nissan Versa", img: "/Nissan Versa.png" },
   ];
 
+  const containerStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+    gap: "1rem",
+  };
+
+  const cardStyle = {
+    backgroundColor: "#fff",
+    textAlign: "center",
+    borderRadius: "6px",
+    padding: "1rem",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+  };
+
+  const imgStyle = {
+    maxHeight: "100px",
+    width: "auto",
+    display: "block",
+    margin: "0 auto",
+  };
+
+  const buttonStyle = {
+    backgroundColor: "#F96E2A",
+    color: "white",
+    padding: "0.3rem 1rem",
+    border: "none",
+    borderRadius: "6px",
+    marginTop: "0.5rem",
+    cursor: "pointer",
+  };
+
   return (
     <section style={{ padding: "2rem" }}>
       <h3 style={{ fontWeight: "bold", fontSize: "1.25rem", marginBottom: "1rem" }}>Today’s Popular</h3>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "flex",
-        }}
-      >
+      <div style={containerStyle}>
         {cars.map((car, idx) => (
-          <div
-            key={idx}
-            style={{
-              backgroundColor: "#fff",
-              textAlign: "center",
-              borderRadius: "6px",
-              padding: "1rem",
-              boxShadow: "0px 0px 10px 10px rgba(0, 0, 0, 0.25)",
-            }}
-          >
-            <img src={car.img} alt={car.name} style={{ height: "100px" }} />
+          <div key={idx} style={cardStyle}>
+            <img src={car.img} alt={car.name} style={imgStyle} />
             <p style={{ marginTop: "0.5rem" }}>{car.name}</p>
-            <button
-              style={{
-                backgroundColor: "#F96E2A",
-                color: "white",
-                padding: "0.3rem 1rem",
-                border: "none",
-                borderRadius: "6px",
-                marginTop: "0.5rem",
-              }}
-            >
-              More
-            </button>
+            <button style={buttonStyle}>More</button>
           </div>
         ))}
       </div>
     </section>
   );
 }
+
 
 export default function MainPage() {
   return (
