@@ -6,7 +6,7 @@ import { CalendarIcon, ClockIcon } from "lucide-react";
 const cars = new Array(12).fill({
   type: "SUV",
   price: "$79.99",
-  image: "@/components/landingimage.png", // Replace with your actual image path
+  image: "@/components/landingimage.png", 
 });
 
 export default function CarHirePage() {
