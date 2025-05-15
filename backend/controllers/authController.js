@@ -69,6 +69,19 @@ const getProfile = async (req, res) => {
     }
   };
 
+  const getSecurityQuestion = async (req, res) => {
+  const { email } = req.query;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({ securityQuestion: user.securityQuestion });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const updateUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
@@ -104,6 +117,7 @@ const verifySecurityAnswer = async (req, res) => {
         
         res.json({ message: 'succeess', userId: user._id });
     } catch (error) {
+        console.log('Error:', error.response?.data || error.message);
         res.status(500).json({ message: 'server error' });
     }
 };
@@ -116,7 +130,7 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user' });
     }
 
-    user.password = newPassword; // 會經由 pre save 進行 hash
+    user.password = newPassword; 
     await user.save();
 
     res.json({ message: 'Password reset successfully' });
@@ -124,4 +138,4 @@ const resetPassword = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-module.exports = { registerUser, loginUser, updateUserProfile, getProfile, verifySecurityAnswer, resetPassword };
+module.exports = { registerUser, loginUser, updateUserProfile, getProfile, verifySecurityAnswer, resetPassword, getSecurityQuestion };

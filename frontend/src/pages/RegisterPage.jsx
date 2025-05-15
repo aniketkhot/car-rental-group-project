@@ -3,13 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
-const [formData, setFormData] = useState({
-  name: "",
-  email: "",
-  password: "",
-  securityQuestion: "",
-  securityAnswer: "",
-});
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    securityQuestion: "",
+    securityAnswer: "",
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,19 +33,18 @@ const [formData, setFormData] = useState({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-           height: '100vh', 
+        height: '100vh',
         flexDirection: 'column',
-        marginTop: 'flex',
         fontFamily: 'Roboto Slab, serif',
         backgroundColor: '#FBF8EF',
-          
+        padding: '20px',
       }}
     >
-      <div className="content-box" style={{ width: '100%', maxWidth: '400px'  }}>
-      <div style={{ textAlign: 'center' ,fontFamily: 'Roboto Slab, serif',}}>
-  <h2>New customers?</h2>
-  <p>Welcome to join us</p>
-</div>
+      <div className="content-box" style={{ width: '100%', maxWidth: '400px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h2>New customers?</h2>
+          <p>Welcome to join us</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <input
             name="name"
@@ -75,27 +74,37 @@ const [formData, setFormData] = useState({
           />
           <input
             name="securityQuestion"
-            placeholder="setting security question"
+            className="form-control mb-2"
+            placeholder="Setting security question"
             value={formData.securityQuestion}
             onChange={handleChange}
             required
-/>
-
+          />
           <input
             name="securityAnswer"
-            placeholder="answer to security question"
+            className="form-control mb-2"
+            placeholder="Answer to security question"
             value={formData.securityAnswer}
             onChange={handleChange}
             required
-/>
-          <button  style={{
-                padding: '4px 175px',
-                backgroundColor: '#F96E2A',
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '1em',
-              }}className="btn btn-primary w-100">Register</button>
+          />
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#F96E2A',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '1em',
+              marginTop: '10px'
+            }}
+            className="btn btn-primary"
+          >
+            Register
+          </button>
         </form>
       </div>
     </div>

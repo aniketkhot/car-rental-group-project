@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
 import CustomerDashboard from "./components/CustomerDashboard";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
   return (
@@ -35,11 +36,15 @@ function App() {
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
             />
+            
             <Route
               path="/customer-dashboard"
               element={<PrivateRoute element={<CustomerDashboard />} />}
+              
             />
+             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           </Routes>
+    
         </div>
       </AuthProvider>
     </Router>
