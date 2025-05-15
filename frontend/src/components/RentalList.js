@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "./RentalList.module.css";
 
 function RentalList() {
   const [rentals, setRentals] = useState([]);
@@ -59,7 +60,6 @@ function RentalList() {
         car: newRental.carId,
         active: newRental.active,
       });
-      
       setNewRental({ customerId: "", carId: "", active: true });
       fetchRentals();
     } catch (err) {
@@ -67,22 +67,23 @@ function RentalList() {
     }
   };
 
-    const handleDelete = async (id) => {
-      if (window.confirm("Are you sure you want to delete this rental?")) {
-        try {
-          await axios.delete(`http://localhost:5001/api/rentals/${id}`);
-          alert("rental deleted successfully");
-          fetchRentals();
-        } catch (err) {
-          console.error("Failed to delete rental:", err);
-        }
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this rental?")) {
+      try {
+        await axios.delete(`http://localhost:5001/api/rentals/${id}`);
+        alert("Rental deleted successfully");
+        fetchRentals();
+      } catch (err) {
+        console.error("Failed to delete rental:", err);
       }
-    };
+    }
+  };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Rental List</h2>
-      <div className="card p-3 mb-4">
+
+      <div className={styles.card}>
         <h5>Add New Rental</h5>
         <select
           className="form-select mb-2"
@@ -125,36 +126,45 @@ function RentalList() {
           </label>
         </div>
 
-        <button className="btn btn-primary" onClick={handleAddRental}>
+        <button className={styles.btnAdd} onClick={handleAddRental}>
           Add Rental
         </button>
       </div>
 
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Car</th>
-            <th>Status</th>
-            <th>Start Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rentals.map((rental) => (
-            <tr key={rental._id}>
-              <td>{rental.customer?.fullName || "N/A"}</td>
-              <td>
-                {rental.car?.make} {rental.car?.model} ({rental.car?.registrationNumber})
-              </td>
-              <td>{rental.active ? "Active" : "Inactive"}</td>
-              <td>{new Date(rental.startDate).toLocaleDateString()}</td>
-              <td> <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(rental._id)}>
-                  Delete
-                </button> </td> 
+      <div className={styles.tableWrapper}>
+        <table className="table mb-0">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Car</th>
+              <th>Status</th>
+              <th>Start Date</th>
+              <th className="text-end">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rentals.map((rental) => (
+              <tr key={rental._id}>
+                <td>{rental.customer?.fullName || "N/A"}</td>
+                <td>
+                  {rental.car?.make} {rental.car?.model} (
+                  {rental.car?.registrationNumber})
+                </td>
+                <td>{rental.active ? "Active" : "Inactive"}</td>
+                <td>{new Date(rental.startDate).toLocaleDateString()}</td>
+                <td className="text-end">
+                  <button
+                    className={styles.btnDel}
+                    onClick={() => handleDelete(rental._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

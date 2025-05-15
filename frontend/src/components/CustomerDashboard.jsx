@@ -1,91 +1,83 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import styles from "./CustomerDashboard.module.css";
 
 function CustomerDashboard() {
-  return (
-    <div
-      style={{
-        fontFamily: "'Roboto Slab', serif",
-        backgroundColor: "#FBF8EF",
-      }}
-    >
-      {/* message */}
-      <section className="p-6 text-black text-lg">
-        <div
-          className="p-6 max-w-4xl mx-auto bg-white rounded-lg"
-          style={{
-            boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)",
-          }}
-        >
-          <p className="semi-bold">No active rentals.</p>
-          <p>You last rented Toyota Corolla</p>
-          <p>12 days ago</p>
-          <p className="semi-bold mt-2">
-            Ready to book your next adventure ?
-          </p>
-          <img
-            src="/toyota1.png"
-            alt="Toyota"
-            className="w-80 mx-auto my-4"
-          />
-          <div className="text-center">
-            <button
-              className="px-5 py-2 rounded text-white"
-              style={{ backgroundColor: "#F96E2A" }}
-            >
-              Browser Again
-            </button>
-          </div>
-        </div>
-      </section>
+  const { token } = useContext(AuthContext);
+  const [rentals, setRentals] = useState([]);
 
-      {/* todays popular */}
-      <section className="p-6 text-black text-lg">
-        <h3 className="semi-bold text-xl mb-2">Today’s Popular</h3>
-        <div className="grid grid-cols-4 gap-4">
+  useEffect(() => {
+    if (!token) return;
+    const fetchUserRentals = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5001/api/rentals/by-customer",
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        setRentals(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUserRentals();
+  }, [token]);
+
+  const latest = rentals
+    .slice()
+    .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))[0];
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.historyWrapper}>
+        <div className={styles.card}>
+          {rentals.length === 0 ? (
+            <>
+              <p className={styles.mainText}>It’s your first time booking.</p>
+              <p className={styles.subText}>Ready to book your next adventure?</p>
+              <button className={styles.browseBtn}>Browse Cars</button>
+            </>
+          ) : (
+            <>
+              <p className={styles.mainText}>
+                You last rented{" "}
+                <span className={styles.highlight}>{latest.car.model}</span>
+              </p>
+              <p className={styles.subText}>
+                {new Date(latest.startDate).toLocaleDateString("en-GB", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric"
+                })}
+              </p>
+              <p className={styles.subText}>Ready to book your next adventure?</p>
+              <button className={styles.browseBtn}>Browse Again</button>
+            </>
+          )}
+        </div>
+      </div>
+
+      <section className={styles.popularSection}>
+        <h3 className={styles.popularTitle}>Today’s Popular</h3>
+        <div className={styles.grid}>
           {[
             { name: "Toyota Corolla", img: "/toyota2.png" },
             { name: "Audi", img: "/Audi.png" },
             { name: "Jeep Wrangler", img: "/Jeep Wrangler.png" },
-            { name: "Nissan Versa", img: "/Nissan Versa.png" },
-          ].map((car, idx) => (
-            <div
-              key={idx}
-              className="p-4 text-center rounded bg-white"
-              style={{
-                boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                src={car.img}
-                alt={car.name}
-                className="h-24 mx-auto mb-2"
-              />
-              <p className="mt-2">{car.name}</p>
-              <button
-                className="mt-2 px-4 py-1 rounded text-white"
-                style={{ backgroundColor: "#F96E2A" }}
-              >
-                More
-              </button>
+            { name: "Nissan Versa", img: "/Nissan Versa.png" }
+          ].map((car, i) => (
+            <div key={i} className={styles.cardItem}>
+              <img src={car.img} alt={car.name} />
+              <p className={styles.carName}>{car.name}</p>
+              <button className={styles.cardBtn}>More</button>
             </div>
           ))}
         </div>
       </section>
-
-      {/* footer */}
-      <footer className="text-center p-4 mt-6" style={{ backgroundColor: "#78B3CE" }}>
-        <p className="font-bold mb-2">FOLLOW US ON OUR SOCIAL NETWORKS</p>
-        <div className="flex justify-center gap-4">
-          <img src="/discord.png" alt="Discord" className="h-6" />
-          <img src="/facebook.png" alt="Facebook" className="h-6" />
-          <img src="/google.png" alt="Google" className="h-6" />
-          <img src="/ins.png" alt="Instagram" className="h-6" />
-        </div>
-      </footer>
     </div>
   );
 }
 
 export default CustomerDashboard;
-
-

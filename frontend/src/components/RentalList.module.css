@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+.container {
+  background-color: #FBF8EF;
+  padding: 2rem;
+  font-family: 'Roboto Slab', serif;
+}
+
+.card {
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 26px rgba(0, 0, 0, 0.25);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.btnAdd {
+  background-color: #F96E2A;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.5rem;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.btnAdd:hover {
+  background-color: #e66a0f;
+  transform: translateY(-2px);
+}
+
+.tableWrapper {
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 26px rgba(0, 0, 0, 0.25);
+}
+
+.table thead {
+  background-color: #78B3CE;
+  color: white;
+  font-family: 'Roboto Slab', serif;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btnDel {
+  background-color: #F96E2A;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+.btnDel:hover {
+  background-color: #e66a0f;
+}

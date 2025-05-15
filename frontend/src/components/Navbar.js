@@ -47,11 +47,6 @@ function Navbar() {
                           Rentals
                         </NavLink>
                       </li>
-                       <li className="nav-item">
-                        <NavLink className="nav-link" to="/rental-records">
-                          Records
-                        </NavLink>
-                      </li>
                     </>
                   )}
     
