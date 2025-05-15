@@ -1,0 +1,105 @@
+.checkout-container {
+    background-color: #fdf9ef;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .checkout-header {
+    background-color: #92bed2;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .checkout-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #000;
+  }
+  
+  .checkout-header button {
+    background-color: #f2783b;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+  
+  .section-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 2rem 0 1rem 0;
+  }
+  
+  .car-details {
+    display: flex;
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .car-details img {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .car-info {
+    flex: 1;
+  }
+  
+  .car-info p {
+    margin: 0.3rem 0;
+  }
+  
+  .price-box {
+    text-align: right;
+  }
+  
+  .price-box p {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  form {
+    background-color: #fffaf0;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .payment-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .book-now-button {
+    background-color: #f2783b;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
