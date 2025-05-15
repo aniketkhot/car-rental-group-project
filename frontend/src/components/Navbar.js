@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
   NavLink,
-  Navigate,
   useNavigate,
 } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -18,69 +14,70 @@ function Navbar() {
     navigate("/login");
   };
 
+  const isAdmin = user && user.role === 'admin'; // 判斷是否是admin，請根據你的用戶資料調整
+
   return (
-          <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#78B3CE' }}>
-            <div className="container-fluid">
-              <NavLink className="navbar-brand" to="/">
-                Car Rental System
-              </NavLink>
-              <div className="d-flex ms-auto">
-                <ul className="navbar-nav">
-                  {user && (
-                    <>
-                      <li className="nav-item">
-                        <span className="nav-link">Welcome, {user.name}</span>
-                      </li>
-    
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/cars">
-                          Cars
-                        </NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/customers">
-                          Customers
-                        </NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/rentals">
-                          Rentals
-                        </NavLink>
-                      </li>
-                    </>
-                  )}
-    
-                  {!user ? (
-                    <>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/login">
-                          Login
-                        </NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/register">
-                          Register
-                        </NavLink>
-                      </li>
-                    </>
-                  ) : (
-                    <>
-    
-                      <li className="nav-item">
-                        <button className="btn btn-link nav-link" 
-                                onClick={() =>{
-                                  handleLogout();
-                                  
-                                  } }>
-                          Logout
-                        </button>
-                      </li>
-                    </>
-                  )}
-                </ul>
-              </div>
-            </div>
-          </nav>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#78B3CE' }}>
+      <div className="container-fluid">
+        <NavLink className="navbar-brand" to="/">
+          <img src="./renteal_logo.png" alt="Car Rental System" style={{ height: '40px' }} />
+        </NavLink>
+        <div className="d-flex ms-auto">
+          <ul className="navbar-nav">
+            {user && (
+              <>
+                <li className="nav-item">
+                  <span className="nav-link">Welcome, {user.name}</span>
+                </li>
+                {isAdmin && (
+                  <>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/cars">
+                        Cars
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/customers">
+                        Customers
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/rentals">
+                        Rentals
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
+
+            {!user ? (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <button
+                  className="btn btn-link nav-link"
+                  onClick={() => handleLogout()}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 }
 

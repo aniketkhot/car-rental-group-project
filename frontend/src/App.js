@@ -11,7 +11,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
 import CustomerDashboard from "./components/CustomerDashboard";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-
 function App() {
   return (
     <Router>
@@ -36,16 +35,43 @@ function App() {
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
             />
-            
             <Route
               path="/customer-dashboard"
               element={<PrivateRoute element={<CustomerDashboard />} />}
-              
             />
              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        
           </Routes>
-    
+          
         </div>
+        <footer
+                style={{
+                  marginTop: "20px",
+                  backgroundColor: "#78B3CE",
+                  padding: "10px",
+                  textAlign: "center",
+                  fontFamily: 'Roboto Slab, serif',
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                <div style={{ marginBottom: "10px" }}>FOLLOW US ON OUR SOCIAL NETWORKS</div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "20px",
+                    flexWrap: "wrap", 
+                  }}
+                >
+              
+                  <img src="discord.png" alt="discord" style={{ width: "50px", height: "50px" }} />
+                  <img src="facebook.png" alt="facebook" style={{ width: "50px", height: "50px" }} />
+                  <img src="google.png" alt="google" style={{ width: "50px", height: "50px" }} />
+                  <img src="ins.png" alt="Instagram" style={{ width: "50px", height: "50px" }} />
+                </div>
+              </footer>
       </AuthProvider>
     </Router>
   );
