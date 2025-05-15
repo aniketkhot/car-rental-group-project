@@ -3,12 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
+const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  password: "",
+  securityQuestion: "",
+  securityAnswer: "",
+});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -72,6 +73,21 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          <input
+            name="securityQuestion"
+            placeholder="setting security question"
+            value={formData.securityQuestion}
+            onChange={handleChange}
+            required
+/>
+
+          <input
+            name="securityAnswer"
+            placeholder="answer to security question"
+            value={formData.securityAnswer}
+            onChange={handleChange}
+            required
+/>
           <button  style={{
                 padding: '4px 175px',
                 backgroundColor: '#F96E2A',

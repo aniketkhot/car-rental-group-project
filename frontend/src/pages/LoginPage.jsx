@@ -2,15 +2,15 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/customer-dashboard";
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,15 +19,17 @@ function LoginPage() {
         email,
         password,
       });
+      console.log('login data send:', res.data); 
+      localStorage.setItem("user", JSON.stringify(res.data));
       if (res.data) {
-        login(res.data);
+    
+        login(res.data); 
         navigate(from, { replace: true });
       }
     } catch (err) {
       alert("Login failed. Please check your credentials.");
     }
-  };
-
+  }
   return (
     <div
       style={{
@@ -67,7 +69,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          <button 
             type="submit"
             style={{
               padding: '4px 175px',
@@ -84,9 +86,22 @@ function LoginPage() {
             Login
           </button>
         </form>
+            <Link
+                to="/forgot-password"
+                style={{
+                  color: '#007bff',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  fontFamily: 'Roboto Slab, serif',
+                }}
+                >   
+                Forgot Password?
+              </Link>
+</div>
       </div>
-    </div>
+    
   );
 }
+
 
 export default LoginPage;

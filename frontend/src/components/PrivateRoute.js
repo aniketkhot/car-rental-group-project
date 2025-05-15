@@ -6,6 +6,7 @@ function PrivateRoute({ element, roles }) {
   const { user } = useContext(AuthContext);
   const location = useLocation();
 
+   console.log('the login user data：', user);
   if (!user) {
  
     return <Navigate to="/login" state={{ from: location }} replace />;

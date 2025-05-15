@@ -8,13 +8,23 @@ const generateToken = (id) => {
 };
 
 const registerUser = async (req, res) => {
-    const { name, email, password, role } = req.body; 
-    try {
-        const userExists = await User.findOne({ email });
-        if (userExists) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-        const user = await User.create({ name, email, password, role });
+  const { name, email, password, role, securityQuestion, securityAnswer } = req.body;
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = new User({ 
+      name, 
+      email, 
+      password, 
+      role,
+      securityQuestion,
+      securityAnswer 
+    });
+    
+    await user.save();
         res.status(201).json({ id: user.id, name: user.name, email: user.email, token: generateToken(user.id) });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -22,17 +32,23 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await User.findOne({ email });
-        if (user && (await bcrypt.compare(password, user.password))) {
-            res.json({ id: user.id, name: user.name, email: user.email, token: generateToken(user.id) });
-        } else {
-            res.status(401).json({ message: 'Invalid email or password' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,   
+        token: generateToken(user._id)
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const getProfile = async (req, res) => {
@@ -71,4 +87,41 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, updateUserProfile, getProfile };
+const verifySecurityAnswer = async (req, res) => {
+    const { email, securityQuestion, securityAnswer } = req.body;
+
+    try {
+        const user = await User.findOne({ email, securityQuestion });
+        if (!user) {
+            return res.status(400).json({ message: 'user invaild or question not vaild' });
+        }
+
+        const isAnswerCorrect = await user.compareSecurityAnswer(securityAnswer);
+        if (!isAnswerCorrect) {
+            return res.status(400).json({ message: 'answer no correct' });
+        }
+
+        
+        res.json({ message: 'succeess', userId: user._id });
+    } catch (error) {
+        res.status(500).json({ message: 'server error' });
+    }
+};
+
+const resetPassword = async (req, res) => {
+  const { userId, newPassword } = req.body;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid user' });
+    }
+
+    user.password = newPassword; // 會經由 pre save 進行 hash
+    await user.save();
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+module.exports = { registerUser, loginUser, updateUserProfile, getProfile, verifySecurityAnswer, resetPassword };
