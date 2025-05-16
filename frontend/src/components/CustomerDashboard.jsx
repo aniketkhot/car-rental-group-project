@@ -35,8 +35,21 @@ function CustomerDashboard() {
         <div className={styles.card}>
           {rentals.length === 0 ? (
             <>
-              <p className={styles.mainText}>It’s your first time booking.</p>
-              <p className={styles.subText}>Ready to book your next adventure?</p>
+              <p className={styles.mainText}>
+                No active rentals.
+                <br />
+                It’s your first time booking.
+              </p>
+              <p className={styles.subText}>
+                Complete your first booking and get{" "}
+                <span className={styles.highlight}>200 points</span>.
+                <br />
+                Make{" "}
+                <span className={styles.highlight}>5 bookings</span> and get a
+                free car model upgrade.
+                <br />
+                Ready to book your next adventure?
+              </p>
               <button className={styles.browseBtn}>Browse Cars</button>
             </>
           ) : (
@@ -52,7 +65,9 @@ function CustomerDashboard() {
                   day: "numeric"
                 })}
               </p>
-              <p className={styles.subText}>Ready to book your next adventure?</p>
+              <p className={styles.subText}>
+                Ready to book your next adventure?
+              </p>
               <button className={styles.browseBtn}>Browse Again</button>
             </>
           )}
