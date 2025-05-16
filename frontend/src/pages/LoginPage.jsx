@@ -15,23 +15,31 @@ function LoginPage() {
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5001/api/auth/login", {
-        email,
-        password,
-      });
-      console.log('login data send:', res.data); 
-      localStorage.setItem("user", JSON.stringify(res.data));
-      if (res.data) {
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5001/api/auth/login", {
+      email,
+      password,
+    });
+    console.log('login data send:', res.data); 
+    localStorage.setItem("user", JSON.stringify(res.data));
+    if (res.data) {
+      login(res.data); 
+
     
-        login(res.data); 
-        navigate(from, { replace: true });
+      const userRole = res.data.role; 
+      if (userRole === 'admin') {
+        navigate('/admin-dashboard', { replace: true });
+      } else if (userRole === 'user') {
+        navigate('/customer-dashboard', { replace: true });
+      } else {
+        navigate(from, { replace: true }); 
       }
-    } catch (err) {
-      alert("Login failed. Please check your credentials.");
     }
+  } catch (err) {
+    alert("Login failed. Please check your credentials.");
   }
+}
   return (
     <div
       style={{

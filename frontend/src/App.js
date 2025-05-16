@@ -33,10 +33,6 @@ function App() {
             <Route path="/" element={<LandingPage />} />
 
             <Route
-              path="/dashboard"
-              element={<PrivateRoute element={<CustomerDashboard />} />}
-            />
-            <Route
               path="/cars"
               element={<PrivateRoute element={<CarList />} roles={['admin']} />}
             />
