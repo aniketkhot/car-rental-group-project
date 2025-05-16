@@ -2,14 +2,15 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/cars";
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,32 +19,35 @@ function LoginPage() {
         email,
         password,
       });
+      console.log('login data send:', res.data); 
+      localStorage.setItem("user", JSON.stringify(res.data));
       if (res.data) {
-        login(res.data);
+    
+        login(res.data); 
         navigate(from, { replace: true });
       }
     } catch (err) {
       alert("Login failed. Please check your credentials.");
     }
-  };
-
+  }
   return (
     <div
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '50vh',
-        marginTop: '20%',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 8px rgba(0,0,0,10.10)',
+        height: '100vh',
+        flexDirection: 'column',
+        marginTop: 'flex',
+        backgroundColor: '#FBF8EF',
+        fontFamily: 'Roboto Slab, serif',
         borderRadius: '10px',
         padding: '20px'
       }}
     >
       <div className="content-box" style={{ width: '100%', maxWidth: '400px' }}>
   
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px',fontFamily: 'Roboto Slab, serif', }}>
           <h2>Welcome Back</h2>
         </div>
         
@@ -55,6 +59,7 @@ function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ fontFamily: 'Roboto Slab, serif',}}
           />
           <input
             type="password"
@@ -64,7 +69,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          <button 
             type="submit"
             style={{
               padding: '4px 175px',
@@ -74,15 +79,29 @@ function LoginPage() {
               borderRadius: '4px',
               cursor: 'pointer',
               fontSize: '1em',
+              fontFamily: 'Roboto Slab, serif',
             }}
             className="btn btn-primary w-100"
           >
             Login
           </button>
         </form>
+            <Link
+                to="/forgot-password"
+                style={{
+                  color: '#007bff',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  fontFamily: 'Roboto Slab, serif',
+                }}
+                >   
+                Forgot Password?
+              </Link>
+</div>
       </div>
-    </div>
+    
   );
 }
+
 
 export default LoginPage;

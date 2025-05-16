@@ -10,27 +10,36 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  
+  const commonStyle = {
+    fontFamily: 'Roboto Slab, serif',
+    fontSize: '16px', 
+    color: 'white', 
+  };
+
   return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold">Your apps name</Link>
+    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center" style={{ fontFamily: 'Roboto Slab, serif' }}>
+      <Link to="/" className="text-2xl font-bold" style={commonStyle}>Your apps name</Link>
       <div>
         {user ? (
           <>
-            <Link to="/tasks" className="mr-4">CRUD</Link>
-            <Link to="/profile" className="mr-4">Profile</Link>
+            <Link to="/tasks" className="mr-4" style={commonStyle}>CRUD</Link>
+            <Link to="/profile" className="mr-4" style={commonStyle}>Profile</Link>
             <button
               onClick={handleLogout}
               className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
+              style={commonStyle}
             >
               Logout
             </button>
           </>
         ) : (
           <>
-            <Link to="/login" className="mr-4">Login</Link>
+            <Link to="/login" className="mr-4" style={commonStyle}>Login</Link>
             <Link
               to="/register"
               className="bg-green-500 px-4 py-2 rounded hover:bg-green-700"
+              style={commonStyle}
             >
               Register
             </Link>

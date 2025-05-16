@@ -7,8 +7,9 @@ function RegisterPage() {
     name: "",
     email: "",
     password: "",
+    securityQuestion: "",
+    securityAnswer: "",
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -32,17 +33,18 @@ function RegisterPage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '50vh', 
-        marginTop: '20%', 
-        backgroundColor: '#fff',
-          boxShadow: '0 4px 8px rgba(0,0,0,10.10)',
+        height: '100vh',
+        flexDirection: 'column',
+        fontFamily: 'Roboto Slab, serif',
+        backgroundColor: '#FBF8EF',
+        padding: '20px',
       }}
     >
-      <div className="content-box" style={{ width: '100%', maxWidth: '400px'  }}>
-      <div style={{ textAlign: 'center' }}>
-  <h2>New customers?</h2>
-  <p>Welcome to join us</p>
-</div>
+      <div className="content-box" style={{ width: '100%', maxWidth: '400px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h2>New customers?</h2>
+          <p>Welcome to join us</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <input
             name="name"
@@ -70,14 +72,39 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
-          <button  style={{
-                padding: '4px 175px',
-                backgroundColor: '#F96E2A',
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '1em',
-              }}className="btn btn-primary w-100">Register</button>
+          <input
+            name="securityQuestion"
+            className="form-control mb-2"
+            placeholder="Setting security question"
+            value={formData.securityQuestion}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="securityAnswer"
+            className="form-control mb-2"
+            placeholder="Answer to security question"
+            value={formData.securityAnswer}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#F96E2A',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '1em',
+              marginTop: '10px'
+            }}
+            className="btn btn-primary"
+          >
+            Register
+          </button>
         </form>
       </div>
     </div>
