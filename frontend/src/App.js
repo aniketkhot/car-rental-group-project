@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
+import CarDetails from './components/CarDetails';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} />}
             />
+            <Route path="/cars/:id" element={<CarDetails />} />
+
           </Routes>
         </div>
       </AuthProvider>
