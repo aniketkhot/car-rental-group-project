@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 
+axios.defaults.baseURL = 'http://localhost:5001/api';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
