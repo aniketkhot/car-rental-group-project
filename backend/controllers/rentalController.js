@@ -1,57 +1,96 @@
 const Rental = require("../models/Rental");
 
-// Create a new rental
+exports.getByCustomer = async (req, res) => {
+  try {
+    const rentals = await Rental
+      .find({ customer: req.user.id })
+      .populate("car")
+      .populate("customer")
+      .sort({ startDate: -1 });
+    res.json(rentals);
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 exports.createRental = async (req, res) => {
   try {
-    const rental = new Rental(req.body);
-    const savedRental = await rental.save();
-    res.status(201).json(savedRental);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const { car, startDate, active } = req.body;
+    const rental = new Rental({
+      customer: req.user.id,
+      car,
+      startDate: startDate || Date.now(),
+      active: active !== undefined ? active : true,
+    });
+    await rental.save();
+    const populated = await Rental
+      .findById(rental._id)
+      .populate("car")
+      .populate("customer");
+    res.status(201).json(populated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };
 
-// Get all rentals
 exports.getRentals = async (req, res) => {
   try {
-    const rentals = await Rental.find()
-      .populate("customer", "fullName email")
-      .populate("car", "make model registrationNumber");
+    const rentals = await Rental
+      .find()
+      .populate("car")
+      .populate("customer")
+      .sort({ startDate: -1 });
     res.json(rentals);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// Get rental by ID
 exports.getRentalById = async (req, res) => {
   try {
-    const rental = await Rental.findById(req.params.id)
-      .populate("customer", "fullName email")
-      .populate("car", "make model registrationNumber");
-    if (!rental) return res.status(404).json({ message: "Rental not found" });
+    const rental = await Rental
+      .findById(req.params.id)
+      .populate("car")
+      .populate("customer");
+    if (!rental) return res.status(404).json({ message: "Not found" });
     res.json(rental);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// Update rental
 exports.updateRental = async (req, res) => {
   try {
-    const updatedRental = await Rental.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedRental);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const rental = await Rental.findById(req.params.id);
+    if (!rental) return res.status(404).json({ message: "Not found" });
+    if (rental.customer.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const { car, startDate, active } = req.body;
+    rental.car = car !== undefined ? car : rental.car;
+    rental.startDate = startDate !== undefined ? startDate : rental.startDate;
+    rental.active = active !== undefined ? active : rental.active;
+    await rental.save();
+    const updated = await Rental
+      .findById(rental._id)
+      .populate("car")
+      .populate("customer");
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };
 
-// Delete rental
 exports.deleteRental = async (req, res) => {
   try {
-    await Rental.findByIdAndDelete(req.params.id);
-    res.json({ message: "Rental deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const rental = await Rental.findById(req.params.id);
+    if (!rental) return res.status(404).json({ message: "Not found" });
+    if (rental.customer.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    await rental.remove();
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
   }
 };

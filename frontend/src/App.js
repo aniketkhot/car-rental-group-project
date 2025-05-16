@@ -5,6 +5,7 @@ import CustomerList from "./components/CustomerList";
 import RentalList from "./components/RentalList";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import CustomerDashboard from "./components/CustomerDashboard";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -28,6 +29,10 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<LandingPage />} />
 
+            <Route
+              path="/dashboard"
+              element={<PrivateRoute element={<CustomerDashboard />} />}
+            />
             <Route
               path="/cars"
               element={<PrivateRoute element={<CarList />} roles={['admin']} />}

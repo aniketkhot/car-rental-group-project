@@ -10,7 +10,9 @@ function LoginPage() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
+
 
   const handleLogin = async (e) => {
     e.preventDefault();

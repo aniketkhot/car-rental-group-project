@@ -26,7 +26,6 @@ app.get('/api/test', (req, res) => {
   res.json({ message: "Backend is working 1212✅" });
 });
 
-
 connectDB().then(() => {
   console.log('Database connected');
   
