@@ -10,6 +10,10 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
 
+import SearchPage from './pages/SearchPage';
+import Checkout from './pages/Checkout';
+import AfterSearch from './pages/AfterSearch';
+
 import CustomerDashboard from "./components/CustomerDashboard";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
@@ -39,6 +43,19 @@ function App() {
             <Route
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
+            />
+
+            <Route
+              path="/search"
+              element={<PrivateRoute element={<SearchPage />} />}
+            />
+            <Route
+              path="/afterSearch"
+              element={<PrivateRoute element={<AfterSearch />} />}
+            />
+            <Route
+              path="/checkout"
+              element={<PrivateRoute element={<Checkout />} />}
             />
 
             <Route
