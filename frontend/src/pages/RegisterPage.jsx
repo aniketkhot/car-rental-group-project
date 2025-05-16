@@ -7,8 +7,9 @@ function RegisterPage() {
     name: "",
     email: "",
     password: "",
+    securityQuestion: "",
+    securityAnswer: "",
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,37 +28,85 @@ function RegisterPage() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          className="form-control mb-2"
-          placeholder="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          className="form-control mb-2"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          className="form-control mb-2"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button className="btn btn-primary">Register</button>
-      </form>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column',
+        fontFamily: 'Roboto Slab, serif',
+        backgroundColor: '#FBF8EF',
+        padding: '20px',
+      }}
+    >
+      <div className="content-box" style={{ width: '100%', maxWidth: '400px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h2>New customers?</h2>
+          <p>Welcome to join us</p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="name"
+            className="form-control mb-2"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            className="form-control mb-2"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            className="form-control mb-2"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="securityQuestion"
+            className="form-control mb-2"
+            placeholder="Setting security question"
+            value={formData.securityQuestion}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="securityAnswer"
+            className="form-control mb-2"
+            placeholder="Answer to security question"
+            value={formData.securityAnswer}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#F96E2A',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '1em',
+              marginTop: '10px'
+            }}
+            className="btn btn-primary"
+          >
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

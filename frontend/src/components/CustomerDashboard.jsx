@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import styles from "./CustomerDashboard.module.css";
 
+
 function CustomerDashboard() {
   return (
     <div
@@ -53,12 +54,15 @@ function CustomerDashboard() {
               <img src={car.img} alt={car.name} />
               <p className={styles.carName}>{car.name}</p>
               <button className={styles.cardBtn}>More</button>
+
             </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }
 
 export default CustomerDashboard;
+
