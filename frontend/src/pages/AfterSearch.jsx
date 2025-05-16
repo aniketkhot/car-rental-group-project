@@ -40,13 +40,15 @@ function AfterSearchPage() {
           <input type="time" value={puTime} onChange={(e) => setPuTime(e.target.value)} />
           <input type="date" value={doDate} onChange={(e) => setDoDate(e.target.value)} />
           <input type="time" value={doTime} onChange={(e) => setDoTime(e.target.value)} />
-          <button className="btn">Edit</button>
+          <div className="auth-buttons">
+          <button className="btn">View</button>
+          </div>
         </div>
 
-        <div className="auth-buttons">
+        {/*<div className="auth-buttons">
           <button className="btn">Register</button>
           <button className="btn">Login</button>
-        </div>
+        </div>*/}
       </header>
 
       {/*  Main layout */}
