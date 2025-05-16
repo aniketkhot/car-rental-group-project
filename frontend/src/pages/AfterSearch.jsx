@@ -30,7 +30,7 @@ function AfterSearchPage() {
       {/*  Top bar  */}
       <header className="header">
         <div className="logo-section">
-          <img src="/logo.png" alt="logo" className="logo" />
+         {/*<img src="/logo.png" alt="logo" className="logo" */}
         </div>
 
         {/* search controls show the values we received */}
