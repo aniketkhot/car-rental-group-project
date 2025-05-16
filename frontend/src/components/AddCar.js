@@ -35,6 +35,8 @@ function AddCar({ onCarAdded }) {
       .catch((err) => console.error("Error adding car:", err));
   };
 
+  
+
   return (
     <div className="card p-4 mb-4">
       <h4>Add New Car</h4>
