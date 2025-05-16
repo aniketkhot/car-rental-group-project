@@ -9,8 +9,13 @@ import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./components/landingpages";
+
 import CustomerDashboard from "./components/CustomerDashboard";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+
+import CarDetails from './components/CarDetails';
+
+
 function App() {
   return (
     <Router>
@@ -35,12 +40,15 @@ function App() {
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
             />
+
             <Route
               path="/customer-dashboard"
               element={<PrivateRoute element={<CustomerDashboard />} />}
             />
              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        
+
+            <Route path="/cars/:id" element={<CarDetails />} />
+
           </Routes>
           
         </div>

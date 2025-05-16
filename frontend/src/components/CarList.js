@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddCar from "./AddCar";
+import { Link } from 'react-router-dom';
+import CarCard from './CarCard';
 
 function CarList() {
   const [cars, setCars] = useState([]);
 
   const fetchCars = () => {
     axios
-      .get("http://localhost:5001/api/cars")
+      .get("cars")
       .then((res) => setCars(res.data))
       .catch((err) => console.error("Error fetching cars:", err));
   };
@@ -15,7 +17,7 @@ function CarList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this car?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/cars/${id}`);
+        await axios.delete(`cars/${id}`);
         alert("Car deleted successfully");
         fetchCars(); // refresh the list
       } catch (err) {
@@ -54,7 +56,12 @@ function CarList() {
                 <td>{car.year}</td>
                 <td>{car.registrationNumber}</td>
                 <td>{car.available ? "Yes" : "No"}</td>
+                <td><Link to={`/cars/${car._id}`}>
+                  <CarCard car={car} />
+                </Link>
+                </td>
                 <td>
+                  
                 <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(car._id)}>
                   Delete
                 </button>
