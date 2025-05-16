@@ -4,79 +4,45 @@ import { AuthContext } from "../context/AuthContext";
 import styles from "./CustomerDashboard.module.css";
 
 function CustomerDashboard() {
-  const { token } = useContext(AuthContext);
-  const [rentals, setRentals] = useState([]);
-
-  useEffect(() => {
-    if (!token) return;
-    const fetchUserRentals = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:5001/api/rentals/by-customer",
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-        setRentals(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchUserRentals();
-  }, [token]);
-
-  const latest = rentals
-    .slice()
-    .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))[0];
-
   return (
-    <div className={styles.container}>
-      <div className={styles.historyWrapper}>
-        <div className={styles.card}>
-          {rentals.length === 0 ? (
-            <>
-              <p className={styles.mainText}>
-                No active rentals.
-                <br />
-                It’s your first time booking.
-              </p>
-              <p className={styles.subText}>
-                Complete your first booking and get{" "}
-                <span className={styles.highlight}>200 points</span>.
-                <br />
-                Make{" "}
-                <span className={styles.highlight}>5 bookings</span> and get a
-                free car model upgrade.
-                <br />
-                Ready to book your next adventure?
-              </p>
-              <button className={styles.browseBtn}>Browse Cars</button>
-            </>
-          ) : (
-            <>
-              <p className={styles.mainText}>
-                You last rented{" "}
-                <span className={styles.highlight}>{latest.car.model}</span>
-              </p>
-              <p className={styles.subText}>
-                {new Date(latest.startDate).toLocaleDateString("en-GB", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric"
-                })}
-              </p>
-              <p className={styles.subText}>
-                Ready to book your next adventure?
-              </p>
-              <button className={styles.browseBtn}>Browse Again</button>
-            </>
-          )}
+    <div
+      style={{
+        fontFamily: "'Roboto Slab', serif",
+        backgroundColor: "#FBF8EF",
+      }}
+    >
+      <section className="p-6 text-black text-lg">
+        <div
+          className="p-6 max-w-4xl mx-auto bg-white rounded-lg"
+          style={{
+            boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          <p className="font-semibold">No active rentals.</p>
+          <p className="font-semibold">You last rented Toyota Corolla</p>
+          <p className="font-semibold">12 days ago</p>
+          <p className="font-semibold mt-2">
+            Ready to book your next adventure ?
+          </p>
+          <img
+            src="/toyota1.png"
+            alt="Toyota"
+            className="w-80 mx-auto my-4"
+          />
+          <div className="text-center">
+            <button
+              className="px-5 py-2 rounded text-white font-semibold"
+              style={{ backgroundColor: "#F96E2A" }}
+            >
+              Browser Again
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <section className={styles.popularSection}>
-        <h3 className={styles.popularTitle}>Today’s Popular</h3>
-        <div className={styles.grid}>
+      <section className="p-6 text-black text-lg">
+        <h3 className="font-semibold text-xl mb-2">Today’s Popular</h3>
+        <div className="grid grid-cols-4 gap-4">
           {[
             { name: "Toyota Corolla", img: "/toyota2.png" },
             { name: "Audi", img: "/Audi.png" },
