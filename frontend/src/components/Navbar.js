@@ -1,8 +1,5 @@
 import React, { useContext } from "react";
-import {
-  NavLink,
-  useNavigate,
-} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
@@ -14,7 +11,13 @@ function Navbar() {
     navigate("/login");
   };
 
-  const isAdmin = user && user.role === 'admin'; // 判斷是否是admin，請根據你的用戶資料調整
+  const isAdmin = user && user.role === 'admin'; 
+
+  
+  const commonStyle = {
+    fontFamily: 'Roboto Slab, serif',
+    fontSize: '16px', 
+    color: '#333',    };
 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#78B3CE' }}>
@@ -24,25 +27,36 @@ function Navbar() {
         </NavLink>
         <div className="d-flex ms-auto">
           <ul className="navbar-nav">
-            {user && (
+            {user &&  (
               <>
                 <li className="nav-item">
-                  <span className="nav-link">Welcome, {user.name}</span>
+                  <span className="nav-link" style={commonStyle}>Welcome, {user.name}</span>
                 </li>
+    
+                {user && user.role !== 'admin' && (
+                          <>
+                           
+                            <li className="nav-item">
+                              <NavLink className="nav-link" to="/customer-dashboard" style={commonStyle}>
+                                customer-dashboard
+                              </NavLink>
+                            </li>
+                          </>
+                        )}
                 {isAdmin && (
                   <>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/cars">
+                      <NavLink className="nav-link" to="/cars" style={commonStyle}>
                         Cars
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/customers">
+                      <NavLink className="nav-link" to="/customers" style={commonStyle}>
                         Customers
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/rentals">
+                      <NavLink className="nav-link" to="/rentals" style={commonStyle}>
                         Rentals
                       </NavLink>
                     </li>
@@ -54,12 +68,12 @@ function Navbar() {
             {!user ? (
               <>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/login">
+                  <NavLink className="nav-link" to="/login" style={commonStyle}>
                     Login
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/register">
+                  <NavLink className="nav-link" to="/register" style={commonStyle}>
                     Register
                   </NavLink>
                 </li>
@@ -68,7 +82,8 @@ function Navbar() {
               <li className="nav-item">
                 <button
                   className="btn btn-link nav-link"
-                  onClick={() => handleLogout()}
+                  onClick={handleLogout}
+                  style={commonStyle}
                 >
                   Logout
                 </button>
