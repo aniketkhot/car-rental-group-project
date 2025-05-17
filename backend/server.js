@@ -14,7 +14,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 
 app.use('/api/car', require('./routes/carRoutes'));
-app.use('/api/customer', require('./routes/customerRoutes'));
+app.use('/api/customer', require('./routes/customerRoutes')); 
 app.use('/api/rental', require('./routes/rentalRoutes'));
 app.use('/api/landingbook', landingbookRoutes);
 
@@ -25,6 +25,7 @@ app.get('/hello', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({ message: "Backend is working 1212✅" });
 });
+
 
 connectDB().then(() => {
   console.log('Database connected');
