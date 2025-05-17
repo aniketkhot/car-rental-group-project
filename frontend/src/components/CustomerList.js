@@ -4,22 +4,29 @@ import UpdateCustomerForm from "./UpdateCustomerForm";
 
 
 function CustomerList() {
+
   const [customers, setCustomers] = useState([]);
+  
+
   const [newCustomer, setNewCustomer] = useState({
     fullName: "",
     email: "",
+    phone: "",
+    address: ""
   });
-  const [editingCustomer, setEditingCustomer] = useState(null); 
-
-
   
+  
+  const [editingCustomer, setEditingCustomer] = useState(null);
+  
+
+
   useEffect(() => {
     fetchCustomers();
   }, []);
 
   const fetchCustomers = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/customers");
+      const res = await axios.get("http://localhost:5001/api/customer");
       setCustomers(res.data);
     } catch (err) {
       console.error("Error fetching customers:", err);
@@ -33,7 +40,7 @@ function CustomerList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this Customer?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/customers/${id}`);
+        await axios.delete(`http://localhost:5001/api/customer/${id}`);
         alert("Car deleted successfully");
         fetchCustomers(); // refresh the list
       } catch (err) {
@@ -44,7 +51,7 @@ function CustomerList() {
 
   const handleAddCustomer = async () => {
     try {
-      await axios.post("http://localhost:5001/api/customers", newCustomer);
+      await axios.post("http://localhost:5001/api/customer", newCustomer);
       setNewCustomer({ fullName: "", email: "", phone:"", address:"" });
       fetchCustomers();
     } catch (err) {
@@ -55,7 +62,7 @@ function CustomerList() {
   return (
     <div>
       <h2>Customer List</h2>
-      <div className="card p-3 mb-4">
+      <div className="card p-3 mb-4" style={{ backgroundColor: "#FBF8EF"}}>
         <h5>Add New Customer</h5>
         <input
           type="text"
@@ -89,7 +96,7 @@ function CustomerList() {
           value={newCustomer.address}
           onChange={handleChange}
         />
-        <button className="btn btn-primary" onClick={handleAddCustomer}>
+        <button className="btn btn-primary" onClick={handleAddCustomer}style={{ backgroundColor: "#F96E2A", color: "#fff" }}>
           Add Customer
         </button>
       </div>

@@ -27,7 +27,7 @@ function RentalList() {
 
   const fetchRentals = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/rentals");
+      const res = await axios.get("http://localhost:5001/api/rental");
       setRentals(res.data);
     } catch (err) {
       console.error("Error fetching rentals", err);
@@ -36,7 +36,7 @@ function RentalList() {
 
   const fetchCars = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/cars");
+      const res = await axios.get("http://localhost:5001/api/car");
       setCars(res.data);
     } catch (err) {
       console.error("Error fetching cars", err);
@@ -45,7 +45,7 @@ function RentalList() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/customers");
+      const res = await axios.get("http://localhost:5001/api/customer");
       setCustomers(res.data);
     } catch (err) {
       console.error("Error fetching customers", err);
@@ -59,32 +59,40 @@ function RentalList() {
   const handleCheckbox = (e) => {
     setNewRental({ ...newRental, [e.target.name]: e.target.checked });
   };
+const handleAddRental = async () => {
+  const startDateObj = new Date(newRental.startDate);
+  const endDateObj = new Date(newRental.endDate);
 
-  const handleAddRental = async () => {
-    try {
-      await axios.post("http://localhost:5001/api/rentals", newRental);
-      setNewRental({
-        customerId: "",
-        carId: "",
-        startDate: "",
-        endDate: "",
-        pricePerDay: 0,
-        totalPrice: 0,
-        paymentStatus: "pending",
-        rentalStatus: "booked",
-        isCorporate: false,
-        notes: "",
-      });
-      fetchRentals();
-    } catch (err) {
-      console.error("Error adding rental", err);
-    }
+  if (isNaN(startDateObj) || isNaN(endDateObj)) {
+    alert('please enter valid dates');
+    return;
+  }
+
+  const postData = {
+    customer: newRental.customerId,
+    car: newRental.carId,
+    startDate: startDateObj.toISOString(),
+    endDate: endDateObj.toISOString(),
+    pricePerDay: Number(newRental.pricePerDay),
+    totalPrice: Number(newRental.totalPrice),
+    paymentStatus: newRental.paymentStatus,
+    rentalStatus: newRental.rentalStatus,
+    isCorporate: newRental.isCorporate,
+    notes: newRental.notes,
   };
+
+  try {
+    await axios.post("http://localhost:5001/api/rental", postData);
+
+  } catch (err) {
+    console.error("Error adding rental", err);
+  }
+};
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this rental?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/rentals/${id}`);
+        await axios.delete(`http://localhost:5001/api/rental/${id}`);
         alert("Rental deleted successfully");
         fetchRentals();
       } catch (err) {

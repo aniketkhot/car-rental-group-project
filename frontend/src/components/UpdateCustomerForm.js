@@ -25,7 +25,7 @@ const UpdateCustomerForm = ({ customer, onUpdate, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5001/api/customers/${customer._id}`, formData);
+      await axios.put(`http://localhost:5001/api/customer/${customer._id}`, formData);
       onUpdate();
     } catch (err) {
       console.error("Failed to update customer", err);
