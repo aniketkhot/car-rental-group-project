@@ -1,29 +1,54 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const rentalSchema = new mongoose.Schema(
-  {
-    customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
-      required: true,
-    },
-    car: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Car",
-      required: true,
-    },
-    startDate: {
-      type: Date,
-      default: Date.now,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
+const rentalSchema = new mongoose.Schema({
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true
   },
-  {
-    timestamps: true, 
+  car: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Car',
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
+    type: Date,
+    required: true
+  },
+  pricePerDay: {
+    type: Number,
+    required: true
+  },
+  totalPrice: {
+    type: Number,
+    required: true
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid', 'failed'],
+    default: 'pending'
+  },
+  rentalStatus: {
+    type: String,
+    enum: ['booked', 'active', 'completed', 'cancelled'],
+    default: 'booked'
+  },
+  isCorporate: {
+    type: Boolean,
+    default: false
+  },
+  notes: {
+    type: String,
+    default: ''
   }
-);
+}, {
+  timestamps: true
+});
 
-module.exports = mongoose.models.Rental || mongoose.model("Rental", rentalSchema);
+module.exports = mongoose.model('Rental', rentalSchema);
+
+

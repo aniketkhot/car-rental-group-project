@@ -1,4 +1,6 @@
-const Rental = require("../models/Rental");
+
+const Rental = require('../models/Rental');
+const { createRental } = require('../utils/factory');
 
 exports.getByCustomer = async (req, res) => {
   try {
@@ -13,25 +15,45 @@ exports.getByCustomer = async (req, res) => {
   }
 };
 
+
+
 exports.createRental = async (req, res) => {
   try {
-    const { car, startDate, active } = req.body;
-    const rental = new Rental({
-      customer: req.user.id,
+    const {
       car,
-      startDate: startDate || Date.now(),
-      active: active !== undefined ? active : true,
+      customer,
+      startDate,
+      endDate,
+      pricePerDay,
+      totalPrice,
+      paymentStatus,
+      rentalStatus,
+      isCorporate,
+      notes
+    } = req.body;
+
+    const rentalData = createRental({
+      car,
+      customer,
+      startDate,
+      endDate,
+      pricePerDay,
+      totalPrice,
+      paymentStatus,
+      rentalStatus,
+      isCorporate,
+      notes
     });
+
+    const rental = new Rental(rentalData);
     await rental.save();
-    const populated = await Rental
-      .findById(rental._id)
-      .populate("car")
-      .populate("customer");
-    res.status(201).json(populated);
+
+    res.status(201).json(rental);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
+
 
 exports.getRentals = async (req, res) => {
   try {
