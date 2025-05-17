@@ -15,7 +15,6 @@ import SearchPage from './pages/SearchPage';
 import Checkout from './pages/Checkout';
 import AfterSearch from './pages/AfterSearch';
 
-import CustomerDashboard from "./components/CustomerDashboard";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 import CarDetails from './components/CarDetails';
@@ -33,10 +32,6 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<LandingPage />} />
 
-            <Route
-              path="/dashboard"
-              element={<PrivateRoute element={<CustomerDashboard />} />}
-            />
             <Route
               path="/cars"
               element={<PrivateRoute element={<CarList />} roles={['admin']} />}
