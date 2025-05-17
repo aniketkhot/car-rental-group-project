@@ -1,11 +1,14 @@
 const Car = require("../models/Car");
+const { createCar } = require('../utils/factory');
+
 
 // Create a new car
 exports.createCar = async (req, res) => {
   try {
-    const newCar = new Car(req.body);
-    const savedCar = await newCar.save();
-    res.status(201).json(savedCar);
+    const carData = createCar(req.body);
+    const car = new Car(carData);
+    await car.save();
+    res.status(201).json(car);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

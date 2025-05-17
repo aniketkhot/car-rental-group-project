@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
 
-app.use('/api/cars', require('./routes/carRoutes'));
+app.use('/api/car', require('./routes/carRoutes'));
 app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/rentals', require('./routes/rentalRoutes'));
 app.use('/api/landingbook', landingbookRoutes);
