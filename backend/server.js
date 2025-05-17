@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const landingbookRoutes = require('./routes/landingbook');
+
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/car', require('./routes/carRoutes'));
 app.use('/api/customer', require('./routes/customerRoutes')); 
 app.use('/api/rental', require('./routes/rentalRoutes'));
-app.use('/api/landingbook', landingbookRoutes);
+
 
 
 app.get('/hello', (req, res) => {

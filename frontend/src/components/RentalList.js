@@ -63,6 +63,7 @@ const handleAddRental = async () => {
   const startDateObj = new Date(newRental.startDate);
   const endDateObj = new Date(newRental.endDate);
 
+
   if (isNaN(startDateObj) || isNaN(endDateObj)) {
     alert('please enter valid dates');
     return;
@@ -83,23 +84,28 @@ const handleAddRental = async () => {
 
   try {
     await axios.post("http://localhost:5001/api/rental", postData);
-
+  window.location.reload();
   } catch (err) {
     console.error("Error adding rental", err);
   }
 };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this rental?")) {
-      try {
-        await axios.delete(`http://localhost:5001/api/rental/${id}`);
-        alert("Rental deleted successfully");
-        fetchRentals();
-      } catch (err) {
-        console.error("Failed to delete rental:", err);
-      }
+const handleDelete = async (id) => {
+  if (window.confirm("Are you sure you want to delete this rental?")) {
+    try {
+      const token = localStorage.getItem('token'); 
+      await axios.delete(`http://localhost:5001/api/rental/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      alert("Rental deleted successfully");
+      fetchRentals();
+    } catch (err) {
+      console.error("Failed to delete rental:", err);
     }
-  };
+  }
+};
 
   return (
     <div className={styles.container}>

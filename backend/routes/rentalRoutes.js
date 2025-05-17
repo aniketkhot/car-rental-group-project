@@ -11,11 +11,11 @@ const {
 } = require("../controllers/rentalController");
 
 router.post("/", createRental);
-router.get("/", protect, getRentals);
-router.get("/by-customer", protect, getByCustomer);
-router.get("/:id", protect, getRentalById);
-router.put("/:id", protect, updateRental);
-router.delete("/:id", protect, deleteRental);
+router.get("/",  getRentals);
+router.get("/by-customer",  getByCustomer);
+router.get("/:id",  getRentalById);
+router.put("/:id",  updateRental);
+router.delete("/:id",  deleteRental);
 
 module.exports = router;
 

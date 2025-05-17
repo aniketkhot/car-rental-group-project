@@ -1,41 +1,7 @@
 import React, { useState } from 'react'
 
 function LandingPage() {
-  const [carType, setCarType] = useState('');
-  const [location, setLocation] = useState('');
-  const [pickupDate, setPickupDate] = useState('');
-  const [dropoffDate, setDropoffDate] = useState('');
-  const [statusMsg, setStatusMsg] = useState('');
-
-  const handleBook = async () => {
-   
-    if (!carType || !location || !pickupDate || !dropoffDate) {
-      alert('please fill in all fields');
-      return;
-    }
-
-    try {
-    const response = await fetch('http://localhost:5001/api/landingbook', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-    carId: carType,
-    customerId: 'sampleCustomerId',
-    pickupDate,
-    dropoffDate
-  }),
-});
-      const data = await response.json();
-      if (response.ok) {
-        setStatusMsg('booking sccuess！');  
-      } else {
-        setStatusMsg('booking fail：' + data.message);
-      }
-    } catch (err) {
-      setStatusMsg('error：' + err.message);
-    }
-  };
-
+ 
   return (
     <div style={styles.container}>
 
@@ -56,56 +22,13 @@ function LandingPage() {
        
         <div style={styles.formContainer}>
         
-          <select
-            value={carType}
-            onChange={(e) => setCarType(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">SELECT CAR TYPE</option>
-            <option value="sedan">Sedan</option>
-            <option value="suv">SUV</option>
-            <option value="convertible">Convertible</option>
-            <option value="Hatchback">Hatchback</option>
-            <option value="Minivan">Minivan</option>
-          </select>
-
-     
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">SELECT LOCATION</option>
-            <option value="BC">brisbane City</option>
-            <option value="SB">Sunnybank</option>
-            <option value="SBH">sunnybank hills</option>
-            <option value="TW">Toowong</option>
-          
-          </select>
-
       
-          <div style={styles.timeContainer}>
-            <input
-              type="date"
-              placeholder="Pick up time"
-              style={{ ...styles.input, flex: 1 }}
-              value={pickupDate}
-              onChange={(e) => setPickupDate(e.target.value)}
-            />
-            <input
-              type="date"
-              placeholder="Drop off time"
-              style={{ ...styles.input, flex: 1 }}
-              value={dropoffDate}
-              onChange={(e) => setDropoffDate(e.target.value)}
-            />
-          </div>
 
           
-          <button style={styles.button} onClick={handleBook}>Book Now!!</button>
+          <button style={styles.button}>Book Now!!</button>
 
          
-          {statusMsg && <p style={{marginTop: '10px', color: '#333'}}>{statusMsg}</p>}
+          <p style={{marginTop: '10px', color: '#333'}}></p>
         </div>
       </div>
     </div>
