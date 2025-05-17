@@ -4,12 +4,18 @@ function createCar(data) {
       model: data.model,
       year: data.year,
       pricePerDay: data.pricePerDay,
+      transmission: data.transmission,
       fuelType: data.fuelType,
       seats: data.seats,
-      transmission: data.transmission,
-      available: data.available ?? true,
+      doors: data.doors ?? 4,
+      luggageCapacity: data.luggageCapacity ?? "2 Large Bags + 1 Cabin",
+      airConditioning: data.airConditioning ?? true,
       features: data.features || [],
-      description: data.description || ""
+      available: data.available ?? true,
+      description: data.description || "",
+      imageUrl: data.imageUrl || "/images/default-car.png",
+      rating: data.rating ?? 0,
+      numOfRatings: data.numOfRatings ?? 0
     };
   }
 
