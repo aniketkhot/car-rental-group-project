@@ -9,7 +9,14 @@ function RentalList() {
   const [newRental, setNewRental] = useState({
     customerId: "",
     carId: "",
-    active: true,
+    startDate: "",
+    endDate: "",
+    pricePerDay: 0,
+    totalPrice: 0,
+    paymentStatus: "pending",
+    rentalStatus: "booked",
+    isCorporate: false,
+    notes: "",
   });
 
   useEffect(() => {
@@ -49,18 +56,25 @@ function RentalList() {
     setNewRental({ ...newRental, [e.target.name]: e.target.value });
   };
 
-  const handleCheckbox = () => {
-    setNewRental({ ...newRental, active: !newRental.active });
+  const handleCheckbox = (e) => {
+    setNewRental({ ...newRental, [e.target.name]: e.target.checked });
   };
 
   const handleAddRental = async () => {
     try {
-      await axios.post("http://localhost:5001/api/rentals", {
-        customer: newRental.customerId,
-        car: newRental.carId,
-        active: newRental.active,
+      await axios.post("http://localhost:5001/api/rentals", newRental);
+      setNewRental({
+        customerId: "",
+        carId: "",
+        startDate: "",
+        endDate: "",
+        pricePerDay: 0,
+        totalPrice: 0,
+        paymentStatus: "pending",
+        rentalStatus: "booked",
+        isCorporate: false,
+        notes: "",
       });
-      setNewRental({ customerId: "", carId: "", active: true });
       fetchRentals();
     } catch (err) {
       console.error("Error adding rental", err);
@@ -113,18 +127,81 @@ function RentalList() {
           ))}
         </select>
 
+        <input
+          type="date"
+          className="form-control mb-2"
+          name="startDate"
+          value={newRental.startDate}
+          onChange={handleChange}
+        />
+
+        <input
+          type="date"
+          className="form-control mb-2"
+          name="endDate"
+          value={newRental.endDate}
+          onChange={handleChange}
+        />
+
+        <input
+          type="number"
+          className="form-control mb-2"
+          name="pricePerDay"
+          placeholder="Price Per Day"
+          value={newRental.pricePerDay}
+          onChange={handleChange}
+        />
+
+        <input
+          type="number"
+          className="form-control mb-2"
+          name="totalPrice"
+          placeholder="Total Price"
+          value={newRental.totalPrice}
+          onChange={handleChange}
+        />
+
+        <select
+          className="form-select mb-2"
+          name="paymentStatus"
+          value={newRental.paymentStatus}
+          onChange={handleChange}
+        >
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+          <option value="failed">Failed</option>
+        </select>
+
+        <select
+          className="form-select mb-2"
+          name="rentalStatus"
+          value={newRental.rentalStatus}
+          onChange={handleChange}
+        >
+          <option value="booked">Booked</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+
         <div className="form-check mb-2">
           <input
             className="form-check-input"
             type="checkbox"
-            checked={newRental.active}
+            name="isCorporate"
+            checked={newRental.isCorporate}
             onChange={handleCheckbox}
-            id="activeRental"
           />
-          <label className="form-check-label" htmlFor="activeRental">
-            Active
-          </label>
+          <label className="form-check-label">Corporate Rental</label>
         </div>
+
+        <textarea
+          className="form-control mb-2"
+          name="notes"
+          placeholder="Notes"
+          value={newRental.notes}
+          onChange={handleChange}
+        />
 
         <button className={styles.btnAdd} onClick={handleAddRental}>
           Add Rental
@@ -137,8 +214,14 @@ function RentalList() {
             <tr>
               <th>Customer</th>
               <th>Car</th>
-              <th>Status</th>
               <th>Start Date</th>
+              <th>End Date</th>
+              <th>Price Per Day</th>
+              <th>Total Price</th>
+              <th>Payment Status</th>
+              <th>Rental Status</th>
+              <th>Corporate</th>
+              <th>Notes</th>
               <th className="text-end">Action</th>
             </tr>
           </thead>
@@ -150,8 +233,14 @@ function RentalList() {
                   {rental.car?.make} {rental.car?.model} (
                   {rental.car?.registrationNumber})
                 </td>
-                <td>{rental.active ? "Active" : "Inactive"}</td>
                 <td>{new Date(rental.startDate).toLocaleDateString()}</td>
+                <td>{new Date(rental.endDate).toLocaleDateString()}</td>
+                <td>{rental.pricePerDay}</td>
+                <td>{rental.totalPrice}</td>
+                <td>{rental.paymentStatus}</td>
+                <td>{rental.rentalStatus}</td>
+                <td>{rental.isCorporate ? "Yes" : "No"}</td>
+                <td>{rental.notes}</td>
                 <td className="text-end">
                   <button
                     className={styles.btnDel}
