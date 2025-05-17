@@ -10,7 +10,7 @@ const {
   getByCustomer,
 } = require("../controllers/rentalController");
 
-router.post("/", protect, createRental);
+router.post("/", createRental);
 router.get("/", protect, getRentals);
 router.get("/by-customer", protect, getByCustomer);
 router.get("/:id", protect, getRentalById);

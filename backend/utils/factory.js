@@ -18,9 +18,24 @@ function createCar(data) {
       numOfRatings: data.numOfRatings ?? 0
     };
   }
+  function createRental(data) {
+    return {
+      customer: data.customer,
+      car: data.car,
+      startDate: new Date(data.startDate),
+      endDate: new Date(data.endDate),
+      pricePerDay: data.pricePerDay,
+      totalPrice: data.totalPrice,
+      paymentStatus: data.paymentStatus || 'pending',
+      rentalStatus: data.rentalStatus || 'booked',
+      isCorporate: data.isCorporate ?? false,
+      notes: data.notes || ''
+    };
+  }
+  
 
   module.exports = {
-    createCar
-    
+    createCar,
+    createRental
   };
   
