@@ -3,6 +3,10 @@ const paypalAdapter = require("./gateways/paypalAdapter");
 const razorpayAdapter = require("./gateways/razorpayAdapter");
 const Payment = require("../models/Payment");
 
+const paymentSubject = require("./observers/paymentSubject");
+const sendEmailReceipt = require("./observers/emailObserver");
+const logPayment = require("./observers/loggerObserver");
+
 class PaymentService {
   constructor() {
     if (PaymentService.instance) return PaymentService.instance;
@@ -13,6 +17,9 @@ class PaymentService {
       paypal: paypalAdapter,
       razorpay: razorpayAdapter
     };
+
+    paymentSubject.subscribe(sendEmailReceipt);
+    paymentSubject.subscribe(logPayment);
 
     PaymentService.instance = this;
   }
@@ -34,6 +41,7 @@ class PaymentService {
     });
 
     await savedPayment.save();
+    paymentSubject.notify(savedPayment);
     return savedPayment;
   }
 
