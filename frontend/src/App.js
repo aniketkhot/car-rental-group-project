@@ -18,6 +18,7 @@ import AfterSearch from './pages/AfterSearch';
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 import CarDetails from './components/CarDetails';
+import AddCar from "./components/AddCar";
 
 
 function App() {
@@ -44,20 +45,6 @@ function App() {
               path="/rentals"
               element={<PrivateRoute element={<RentalList />} roles={['admin']} />}
             />
-
-            <Route
-              path="/search"
-              element={<PrivateRoute element={<SearchPage />} />}
-            />
-            <Route
-              path="/afterSearch"
-              element={<PrivateRoute element={<AfterSearch />} />}
-            />
-            <Route
-              path="/checkout"
-              element={<PrivateRoute element={<Checkout />} />}
-            />
-
             <Route
               path="/customer-dashboard"
               element={<PrivateRoute element={<CustomerDashboard />} />}
@@ -65,7 +52,11 @@ function App() {
              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
             <Route path="/cars/:id" element={<CarDetails />} />
-
+            <Route path="/addcar" element={<PrivateRoute element={<AddCar />} roles={['admin']} />} />
+              <Route path="/searchpage" element={<SearchPage/>} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/aftersearch" element={<AfterSearch />} />
+            
           </Routes>
           
         </div>
