@@ -13,6 +13,9 @@ const carSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  registrationNumber: {
+    type: Number
+  },
   pricePerDay: {
     type: Number,
     required: true

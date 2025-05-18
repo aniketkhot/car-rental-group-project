@@ -1,13 +1,7 @@
 
 const Rental = require('../models/Rental');
-const { createRental } = require('../utils/factory');
-const {
-  StandardPricing,
-  CorporatePricing,
-  WeekendPricing,
-  LongTermPricing,
-  PeakSeasonPricing
-} = require('../services/pricingStrategy');
+
+const { createNewRental } = require("../services/rentalService");
 
 
 exports.getByUser = async (req, res) => {
@@ -27,67 +21,15 @@ exports.getByUser = async (req, res) => {
 
 
 
+
 exports.createRental = async (req, res) => {
   try {
-    const {
-      car,
-      user,
-      startDate,
-      endDate,
-      pricePerDay,
-      paymentStatus,
-      rentalStatus,
-      isCorporate,
-      notes
-    } = req.body;
-
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const rentalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-
-    if (rentalDays <= 0) {
-      return res.status(400).json({ message: "End date must be after start date." });
-    }
-
-    let strategy = new StandardPricing();
-
-    if (isCorporate) {
-      strategy = new CorporatePricing();
-    } else if (rentalDays > 7) {
-      strategy = new LongTermPricing();
-    } else if (
-      new Date(startDate) >= new Date("2025-12-15") &&
-      new Date(startDate) <= new Date("2026-01-10")
-    ) {
-      strategy = new PeakSeasonPricing();
-    } else {
-      strategy = new WeekendPricing();
-    }
-
-    const totalPrice = strategy.calculate(pricePerDay, rentalDays, start);
-
-    const rentalData = createRental({
-      user,
-      car,
-      startDate,
-      endDate,
-      pricePerDay,
-      totalPrice,
-      paymentStatus,
-      rentalStatus,
-      isCorporate,
-      notes
-    });
-
-    const rental = new Rental(rentalData);
-    await rental.save();
-
+    const rental = await createNewRental(req.body);
     res.status(201).json(rental);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
-
 
 
 exports.getRentals = async (req, res) => {

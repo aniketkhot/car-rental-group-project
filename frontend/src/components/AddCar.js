@@ -20,7 +20,7 @@ function AddCar({ onCarAdded }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/cars", formData)
+    axios.post("/car", formData)
       .then((res) => {
         onCarAdded(); // Refresh list
         setFormData({
