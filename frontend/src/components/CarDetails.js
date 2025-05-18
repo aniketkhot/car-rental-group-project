@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from "../axiosConfig";
 
 const CarDetails = () => {
   const { id } = useParams();
   const [car, setCar] = useState(null);
 
   useEffect(() => {
-     axios.get(`cars/${id}`)
+    axios.get(`/car/${id}`)
       .then(res => setCar(res.data))
       .catch(err => console.error(err));
   }, [id]);

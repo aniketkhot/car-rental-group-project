@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 
 const UpdateCustomerForm = ({ customer, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const UpdateCustomerForm = ({ customer, onUpdate, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5001/api/customer/${customer._id}`, formData);
+      await axios.put(`/user/${customer._id}`, formData);
       onUpdate();
     } catch (err) {
       console.error("Failed to update customer", err);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 
 function AddCar({ onCarAdded }) {
   const [formData, setFormData] = useState({
@@ -20,8 +20,7 @@ function AddCar({ onCarAdded }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5001/api/cars", formData)
+    axios.post("/cars", formData)
       .then((res) => {
         onCarAdded(); // Refresh list
         setFormData({

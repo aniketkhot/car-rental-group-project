@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 import UpdateCustomerForm from "./UpdateCustomerForm";
 
 
@@ -26,7 +26,7 @@ function CustomerList() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/customer");
+      const res = await axios.get("/user");
       setCustomers(res.data);
     } catch (err) {
       console.error("Error fetching customers:", err);
@@ -40,7 +40,7 @@ function CustomerList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this Customer?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/customer/${id}`);
+        await axios.delete(`/user/${id}`);
         alert("Car deleted successfully");
         fetchCustomers(); // refresh the list
       } catch (err) {
@@ -51,7 +51,7 @@ function CustomerList() {
 
   const handleAddCustomer = async () => {
     try {
-      await axios.post("http://localhost:5001/api/customer", newCustomer);
+      await axios.post("/user", newCustomer);
       setNewCustomer({ fullName: "", email: "", phone:"", address:"" });
       fetchCustomers();
     } catch (err) {

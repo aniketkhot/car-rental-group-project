@@ -1,5 +1,5 @@
     import React, { useState } from "react";
-    import axios from "axios";
+    import axios from "../axiosConfig";
     import { useNavigate } from 'react-router-dom';
 
     function ForgotPasswordPage() {
@@ -14,7 +14,7 @@
 
     const handleFetchQuestion = async () => {
         try {
-        const res = await axios.get(`http://localhost:5001/api/auth/security-question?email=${email}`);
+        const res = await axios.get(`/auth/security-question?email=${email}`);
         setSecurityQuestion(res.data.securityQuestion);
         setStep(2);
         } catch (err) {
@@ -24,7 +24,7 @@
 
     const handleVerifyAnswer = async () => {
         try {
-        const res = await axios.post(`http://localhost:5001/api/auth/verify-security-answer`, {
+        const res = await axios.post(`/auth/verify-security-answer`, {
             email,
             securityQuestion,
             securityAnswer,
@@ -38,7 +38,7 @@
 
     const handleResetPassword = async () => {
         try {
-        await axios.post(`http://localhost:5001/api/auth/reset-password`, {
+        await axios.post(`/auth/reset-password`, {
             userId,
             newPassword,
         });

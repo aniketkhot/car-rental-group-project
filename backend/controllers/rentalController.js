@@ -10,12 +10,12 @@ const {
 } = require('../services/pricingStrategy');
 
 
-exports.getByCustomer = async (req, res) => {
+exports.getByUser = async (req, res) => {
   try {
     const rentals = await Rental
-      .find({ customer: req.user.id })
+      .find({ user: req.user.id })
       .populate("car")
-      .populate("customer")
+      .populate("user")
       .sort({ startDate: -1 });
     res.json(rentals);
   } catch (err) {
@@ -31,7 +31,7 @@ exports.createRental = async (req, res) => {
   try {
     const {
       car,
-      customer,
+      user,
       startDate,
       endDate,
       pricePerDay,
@@ -67,7 +67,7 @@ exports.createRental = async (req, res) => {
     const totalPrice = strategy.calculate(pricePerDay, rentalDays, start);
 
     const rentalData = createRental({
-      customer,
+      user,
       car,
       startDate,
       endDate,
@@ -95,7 +95,7 @@ exports.getRentals = async (req, res) => {
     const rentals = await Rental
       .find()
       .populate("car")
-      .populate("customer")
+      .populate("user")
       .sort({ startDate: -1 });
     res.json(rentals);
   } catch (err) {
@@ -108,7 +108,7 @@ exports.getRentalById = async (req, res) => {
     const rental = await Rental
       .findById(req.params.id)
       .populate("car")
-      .populate("customer");
+      .populate("user");
     if (!rental) return res.status(404).json({ message: "Not found" });
     res.json(rental);
   } catch (err) {
@@ -120,7 +120,7 @@ exports.updateRental = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id);
     if (!rental) return res.status(404).json({ message: "Not found" });
-    if (rental.customer.toString() !== req.user.id) {
+    if (rental.user.toString() !== req.user.id) {
       return res.status(403).json({ message: "Forbidden" });
     }
     const { car, startDate, active } = req.body;
@@ -131,7 +131,7 @@ exports.updateRental = async (req, res) => {
     const updated = await Rental
       .findById(rental._id)
       .populate("car")
-      .populate("customer");
+      .populate("user");
     res.json(updated);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -142,7 +142,7 @@ exports.deleteRental = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id);
     if (!rental) return res.status(404).json({ message: "Not found" });
-    if (rental.customer.toString() !== req.user.id) {
+    if (rental.user.toString() !== req.user.id) {
       return res.status(403).json({ message: "Forbidden" });
     }
     await rental.remove();

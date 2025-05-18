@@ -7,15 +7,29 @@ const {
   getRentalById,
   updateRental,
   deleteRental,
-  getByCustomer,
+  getByUser,
 } = require("../controllers/rentalController");
 
-router.post("/", createRental);
-router.get("/", protect, getRentals);
-router.get("/by-customer", protect, getByCustomer);
+const { restrictIfNotOwnerOrAdmin } = require("../middleware/roleProxy");
+const Rental = require("../models/Rental");
+
+router.post("/", protect, createRental);
+
+const { restrictTo } = require("../middleware/roleProxy");
+
+
+
+router.get(
+  "/",
+  protect,
+  restrictTo("admin"),
+  getRentals
+);
+
+
+router.get("/by-user", protect, getByUser);
 router.get("/:id", protect, getRentalById);
 router.put("/:id", protect, updateRental);
 router.delete("/:id", protect, deleteRental);
 
 module.exports = router;
-

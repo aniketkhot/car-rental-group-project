@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const rentalSchema = new mongoose.Schema({
-  customer: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
+    ref: 'user',
     required: true
   },
   car: {

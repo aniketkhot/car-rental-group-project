@@ -20,7 +20,7 @@ function createCar(data) {
   }
   function createRental(data) {
     return {
-      customer: data.customer,
+      user: data.user,
       car: data.car,
       startDate: new Date(data.startDate),
       endDate: new Date(data.endDate),
