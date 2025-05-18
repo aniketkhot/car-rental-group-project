@@ -41,7 +41,20 @@ function Navbar() {
                                 customer-dashboard
                               </NavLink>
                             </li>
+                             <li className="nav-item">
+                  <NavLink className="nav-link" to="/searchpage" style={commonStyle}>
+                    searchpage
+                  </NavLink>
+                   </li>
+                    <li className="nav-item">
+                  <NavLink className="nav-link" to="/checkout" style={commonStyle}>
+                    checkout
+                  </NavLink>
+                   </li>
+                 
+               
                           </>
+                          
                         )}
                 {isAdmin && (
                   <>
@@ -76,7 +89,19 @@ function Navbar() {
                   <NavLink className="nav-link" to="/register" style={commonStyle}>
                     Register
                   </NavLink>
-                </li>
+                 
+                   </li>
+                            <li className="nav-item">
+                  <NavLink className="nav-link" to="/searchpage" style={commonStyle}>
+                    searchpage
+                  </NavLink>
+                   </li>
+                    <li className="nav-item">
+                  <NavLink className="nav-link" to="/checkout" style={commonStyle}>
+                    checkout
+                  </NavLink>
+                   </li>
+                  
               </>
             ) : (
               <li className="nav-item">
