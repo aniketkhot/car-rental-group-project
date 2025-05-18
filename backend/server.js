@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const landingbookRoutes = require('./routes/landingbook');
-
+const paymentRoutes = require("./routes/paymentRoutes");
 dotenv.config();
 
 const app = express();
@@ -24,6 +24,8 @@ app.use('/api/car', require('./routes/carRoutes'));
 app.use('/api/user', require('./routes/userRoutes')); 
 app.use('/api/rental', require('./routes/rentalRoutes'));
 app.use('/api/landingbook', landingbookRoutes);
+
+app.use("/api/payment", paymentRoutes);
 
 
 app.get('/hello', (req, res) => {
