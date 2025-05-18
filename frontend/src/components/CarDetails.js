@@ -12,7 +12,7 @@ const CarDetails = () => {
       .catch(err => console.error(err));
   }, [id]);
   console.log(car)
-  if (!car) return <div className="container text-center p-5">Loading car details...</div>;
+ 
 
   return (
     <div className="container my-5 p-4 rounded shadow" style={{ backgroundColor: '#EBE9E1' }}>

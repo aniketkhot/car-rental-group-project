@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-import styles from "./CustomerDashboard.module.css";
 import { useNavigate } from 'react-router-dom';
+import styles from "./CustomerDashboard.module.css";
 
 function CustomerDashboard() {
   const [rentals, setRentals] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios.get('/api/rentals/by-customer')
       .then(res => {
@@ -18,16 +18,20 @@ function CustomerDashboard() {
       })
       .catch(error => {
         console.error('Failed to fetch rental data:', error);
+        setRentals([]); 
       });
   }, []);
 
   return (
     <div style={{ fontFamily: "'Roboto Slab', serif", backgroundColor: "#FBF8EF" }}>
       <section className="p-6 text-black text-lg">
-        <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg" style={{ boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)" }}>
+        <div
+          className="p-6 max-w-4xl mx-auto bg-white rounded-lg"
+          style={{ boxShadow: "0 0 10px 10px rgba(0, 0, 0, 0.25)" }}
+        >
           {rentals && rentals.length > 0 ? (
             <>
-              {/* Display the most recent rental record */}
+     
               {(() => {
                 const latestRental = rentals[0];
                 const carModel = latestRental.car ? latestRental.car.carModel : 'Unknown Model';
@@ -42,18 +46,23 @@ function CustomerDashboard() {
               })()}
             </>
           ) : (
-            <p className="font-semibold">No active rentals or rental records found.</p>
+         
+            <>
+              <p className="font-semibold">No active rentals or rental records found.</p>
+              <p className="font-semibold">Complete your first booking and get 200 points</p>
+              <p className="font-semibold">Make 5 bookings and get a free car model upgrade</p>
+              <p className="font-semibold">Ready to book your next adventure?</p>
+            </>
           )}
-          <img src="/toyota1.png" alt="Toyota" className="w-80 mx-auto my-4" />
-          <div className="text-center">
-          <button 
-          className="px-5 py-2 rounded text-white font-semibold" 
-          style={{ backgroundColor: "#F96E2A" }} 
-          onClick={() => navigate('/searchpage')}
+
+          <div className="text-center mt-4">
+            <button
+              className="px-5 py-2 rounded text-white font-semibold"
+              style={{ backgroundColor: "#F96E2A" }}
+              onClick={() => navigate('/searchpage')}
             >
               Book Now!!
             </button>
-            
           </div>
         </div>
       </section>
@@ -65,21 +74,18 @@ function CustomerDashboard() {
             { name: "Toyota Corolla", img: "/toyota2.png" },
             { name: "Audi", img: "/Audi.png" },
             { name: "Jeep Wrangler", img: "/Jeep Wrangler.png" },
-            { name: "Nissan Versa", img: "/Nissan Versa.png" }
+            { name: "Nissan Versa", img: "/Nissan Versa.png" },
           ].map((car, i) => (
             <div key={i} className={styles.cardItem}>
               <img src={car.img} alt={car.name} />
               <p className={styles.carName}>{car.name}</p>
               <button className={styles.cardBtn}>More</button>
-
             </div>
           ))}
         </div>
       </section>
-
     </div>
   );
 }
 
 export default CustomerDashboard;
-

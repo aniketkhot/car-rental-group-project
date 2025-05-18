@@ -31,7 +31,7 @@ function LoginPage() {
     
       const userRole = res.data.role; 
       if (userRole === 'admin') {
-        navigate('/admin-dashboard', { replace: true });
+        navigate('/', { replace: true });
       } else if (userRole === 'user') {
         navigate('/customer-dashboard', { replace: true });
       } else {
