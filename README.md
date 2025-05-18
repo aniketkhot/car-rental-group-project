@@ -78,6 +78,7 @@ This project applies key OOP concepts:
 ### 1. Clone the Repository
 
   git clone https://github.com/aniketkhot/car-rental-group-project.git
+ 
   cd car-rental-group-project/backend
 
 
@@ -89,7 +90,7 @@ This project applies key OOP concepts:
   
 ### 3. Create `.env` File in the `backend/` Folder
 
-```env
+
 MONGO_URI=<your_mongodb_atlas_uri>
 JWT_SECRET=<your_jwt_secret>
 PORT=5001
