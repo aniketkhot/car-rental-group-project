@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosConfig";
 import { Link } from "react-router-dom";
 
 function LoginPage() {
@@ -17,12 +17,14 @@ function LoginPage() {
   const handleLogin = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post("http://localhost:5001/api/auth/login", {
+    const res = await axios.post("/auth/login", {
       email,
       password,
     });
     console.log('login data send:', res.data); 
     localStorage.setItem("user", JSON.stringify(res.data));
+    localStorage.setItem("token", encodeURIComponent(res.data.token));
+
     if (res.data) {
       login(res.data); 
 

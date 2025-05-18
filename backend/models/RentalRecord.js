@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const rentalRecordSchema = new mongoose.Schema({
   carName: String,
-  customerName: String,
+  userName: String,
   leaseDate: Date,
   returnDate: {
     type: Date,

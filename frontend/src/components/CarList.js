@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 import AddCar from "./AddCar";
 import { Link } from 'react-router-dom';
 import CarCard from './CarCard';
@@ -17,7 +17,7 @@ function CarList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this car?")) {
       try {
-        await axios.delete(`cars/${id}`);
+        await axios.delete(`/cars/${id}`);
         alert("Car deleted successfully");
         fetchCars(); // refresh the list
       } catch (err) {

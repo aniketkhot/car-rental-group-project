@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import styles from "./RentalList.module.css";
+import axiosAuth from "../axiosConfig";
+
+
+
+
 
 function RentalList() {
   const [rentals, setRentals] = useState([]);
@@ -27,7 +32,9 @@ function RentalList() {
 
   const fetchRentals = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/rental");
+      console.log('before call')
+      const res = await axiosAuth.get("/rental");
+      console.log('after  call')
       setRentals(res.data);
     } catch (err) {
       console.error("Error fetching rentals", err);
@@ -36,7 +43,7 @@ function RentalList() {
 
   const fetchCars = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/car");
+      const res = await axiosAuth.get("/car");
       setCars(res.data);
     } catch (err) {
       console.error("Error fetching cars", err);
@@ -45,7 +52,7 @@ function RentalList() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/customer");
+      const res = await axiosAuth.get("/user");
       setCustomers(res.data);
     } catch (err) {
       console.error("Error fetching customers", err);
@@ -82,7 +89,7 @@ const handleAddRental = async () => {
   };
 
   try {
-    await axios.post("http://localhost:5001/api/rental", postData);
+    await axiosAuth.post("/rental", postData);
 
   } catch (err) {
     console.error("Error adding rental", err);
@@ -92,7 +99,7 @@ const handleAddRental = async () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this rental?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/rental/${id}`);
+        await axiosAuth.delete(`/rental/${id}`);
         alert("Rental deleted successfully");
         fetchRentals();
       } catch (err) {

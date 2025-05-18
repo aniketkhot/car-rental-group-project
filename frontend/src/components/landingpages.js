@@ -15,7 +15,7 @@ function LandingPage() {
     }
 
     try {
-    const response = await fetch('http://localhost:5001/api/landingbook', {
+    const response = await fetch('/landingbook', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 

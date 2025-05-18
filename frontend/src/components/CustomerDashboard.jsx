@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 import { AuthContext } from "../context/AuthContext";
 import styles from "./CustomerDashboard.module.css";
 

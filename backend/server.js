@@ -1,5 +1,6 @@
-const express = require('express');
 const dotenv = require('dotenv');
+const express = require('express');
+
 const cors = require('cors');
 const connectDB = require('./config/db');
 const landingbookRoutes = require('./routes/landingbook');
@@ -8,13 +9,19 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+
+
+app.use(cors({
+  origin: "http://localhost:3000", //allow frontend origin
+  credentials: true,               // required if using cookies/session in future
+}));
+
 app.use(express.json()); 
 
 app.use('/api/auth', require('./routes/authRoutes'));
 
 app.use('/api/car', require('./routes/carRoutes'));
-app.use('/api/customer', require('./routes/customerRoutes')); 
+app.use('/api/user', require('./routes/userRoutes')); 
 app.use('/api/rental', require('./routes/rentalRoutes'));
 app.use('/api/landingbook', landingbookRoutes);
 
@@ -25,6 +32,17 @@ app.get('/hello', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({ message: "Backend is working 1212✅" });
 });
+
+app.get('/api/debug/routes', (req, res) => {
+  const listEndpoints = require('express-list-endpoints');
+  res.json(listEndpoints(app));
+});
+
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swaggerOptions'); 
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 connectDB().then(() => {

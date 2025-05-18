@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import './Search-and-checkout.css';
 
 function CheckoutPage() {
@@ -23,7 +23,7 @@ function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/bookings/checkout', formData);
+      await axios.post('/bookings/checkout', formData);
       setConfirmation('Booking confirmed!');
       setFormData({
         email: '',
