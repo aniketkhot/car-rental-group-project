@@ -2,10 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import styles from "./CustomerDashboard.module.css";
+import { useNavigate } from 'react-router-dom';
 
 function CustomerDashboard() {
   const [rentals, setRentals] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get('/api/rentals/by-customer')
       .then(res => {
@@ -45,9 +46,14 @@ function CustomerDashboard() {
           )}
           <img src="/toyota1.png" alt="Toyota" className="w-80 mx-auto my-4" />
           <div className="text-center">
-            <button className="px-5 py-2 rounded text-white font-semibold" style={{ backgroundColor: "#F96E2A" }}>
-              Browse Again
+          <button 
+          className="px-5 py-2 rounded text-white font-semibold" 
+          style={{ backgroundColor: "#F96E2A" }} 
+          onClick={() => navigate('/searchpage')}
+            >
+              Book Now!!
             </button>
+            
           </div>
         </div>
       </section>

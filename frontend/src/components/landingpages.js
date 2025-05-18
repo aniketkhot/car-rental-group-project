@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
- 
+  const navigate = useNavigate();
   return (
     <div style={styles.container}>
 
@@ -25,7 +26,9 @@ function LandingPage() {
       
 
           
-          <button style={styles.button}>Book Now!!</button>
+   <button style={styles.button} onClick={() => navigate('/searchpage')}>
+  Book Now!!
+</button>
 
          
           <p style={{marginTop: '10px', color: '#333'}}></p>
