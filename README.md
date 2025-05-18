@@ -1,68 +1,129 @@
-# **Assignment: Full-Stack CRUD Application Development with DevOps Practices**
+# Car Rental System
 
-## **Objective**
+This is a full-stack car rental management system built using Node.js, Express, MongoDB, and React. It allows users to browse and rent cars, while admins can manage vehicles, view rentals, and handle payment processes. The backend supports authentication, role-based access control, and dynamic pricing based on different strategies.
 
-You have been provided with a starter project that includes user authentication using  **Node.js, React.js, and MongoDB**. Your task is to extend this application by implementing **CRUD (Create, Read, Update, Delete) operations** for a real-world application of your choice, while following industry best practices such as:
+## Features
 
-* **Project Management with JIRA**
-* **Requirement Diagram using SysML**
-* **Version Control using GitHub**
-* **CI/CD Integration for Automated Deployment**
+- User registration and login with JWT authentication
+- Role-based access (admin vs normal user)
+- CRUD operations for cars, rentals, and payments
+- Dynamic pricing strategy based on rental type, duration, and season
+- Secure and centralized payment service using singleton
+- Observer-based receipt notification after payment
+- API access protected via middleware
+- Swagger API documentation
+- Deployment-ready backend (used on AWS EC2)
 
-## **Requirements**
+## Technologies Used
 
-### **1. Choose a Real-World Application**
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT for Authentication
+- Swagger for API docs
+- Postman for testing
 
-Select a meaningful use case for your CRUD operations. We will provide the list, you have to select it.
+## Object-Oriented Principles
 
-### **2. Project Management with JIRA and SysML**
+This project applies key OOP concepts:
 
-* Create a **JIRA project** and define:
-  * **Epic**
-  * **User Stories** (features required in your app)
-  * **Child issues & Subtasks** (breaking down development work)
-  * **Sprint Planning** (organizing work into milestones)
-* Document your JIRA **board URL** in the project README.
-* Draw a requirements diagram
+- **Classes & Objects**: All main entities (User, Car, Rental, Payment) are implemented as Mongoose schema models and used as instantiated objects across the app.
+- **Encapsulation**: Business logic is separated into services (e.g., rentalService, paymentService), keeping controllers focused and clean.
+- **Inheritance**: Different pricing strategy classes extend a common pricing base class to reuse logic and override behavior.
+- **Polymorphism**: Strategy classes override the same method `calculate()` with different internal logic, allowing behavior to vary based on object type.
 
-### **3. Backend Development (Node.js + Express + MongoDB)**
+## Design Patterns Implemented
 
-* Create a user-friendly interface to interact with your API (Some portion developed, follow task manager app)).
-* Implement **forms** for adding and updating records.
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
+- **Factory Pattern**: Used for creating car and rental objects using a centralized factory method for consistent instantiation.
+- **Strategy Pattern**: Different pricing rules are applied using interchangeable strategy classes.
+- **Singleton Pattern**: Payment service is created as a single instance to handle all payment logic and event subscriptions.
+- **Observer Pattern**: Receipt generation and other post-payment actions are triggered via observer callbacks.
+- **Proxy Pattern**: Role-based access control is handled using middleware that filters requests based on user permissions.
 
-### **4. Frontend Development (React.js)**
+## Folder Structure
 
-* Create a user-friendly interface to interact with your API (**Some portion developed, follow task manager app)**.
-* Implement **forms** for adding, showing, deleting and updating records (CRUD).
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
+/backend
+├── controllers/
+│ ├── authController.js
+│ ├── carController.js
+│ ├── paymentController.js
+│ └── rentalController.js
+├── middleware/
+│ ├── authMiddleware.js
+│ └── authorize.js
+├── models/
+│ ├── User.js
+│ ├── Car.js
+│ ├── Rental.js
+│ └── Payment.js
+├── routes/
+│ ├── authRoutes.js
+│ ├── carRoutes.js
+│ ├── rentalRoutes.js
+│ └── paymentRoutes.js
+├── services/
+│ ├── rentalService.js
+│ ├── paymentService.js
+│ ├── pricingStrategy.js
+│ └── userRoles.js
+├── utils/
+│ ├── factory.js
+│ └── adapters/ (Stripe, PayPal, Razorpay)
+├── swaggerOptions.js
+├── server.js
 
-### **5. Authentication & Authorization**
 
-* Ensure **only authenticated users** can access and perform CRUD operations. (Already developed in your project)
-* Use **JWT (JSON Web Tokens)** for user authentication (Use the task manager one from .env file).
+## Getting Started
 
-### **6. GitHub Version Control & Branching Strategy**
+### 1. Clone the Repository
 
-* Use **GitHub for version control** and maintain:
-  * `main` branch (stable production-ready code)
-  * Feature branches (`feature/xyz`) for each new functionality
-* Follow proper **commit messages** and  **pull request (PR) reviews** .
+  git clone https://github.com/aniketkhot/car-rental-group-project.git
+  cd car-rental-group-project/backend
 
-### **7. CI/CD Pipeline Setup**
 
-* Implement a **CI/CD pipeline using GitHub Actions** to:
-  * Automatically **run tests** on every commit/pull request (Optional).
-  * Deploy the **backend** to **AWS** .
-  * Deploy the **frontend** to **AWS**.
-* Document your  **CI/CD workflow in the README** .
+### 2. Install Dependencies
 
-## **Submission Requirements**
 
-* **JIRA Project Board URL** (user stories ).
-* **Requirment diagram** (Using project features)
-* **GitHub Repository** (`backend/` and `frontend/`).
-* **README.md** with:
+  npm install
 
-  * Project setup instructions.
-  * CI/CD pipeline details.
+  
+### 3. Create `.env` File in the `backend/` Folder
+
+```env
+MONGO_URI=<your_mongodb_atlas_uri>
+JWT_SECRET=<your_jwt_secret>
+PORT=5001
+
+### 4. Start the Backend Server
+
+npm start
+The server will run on http://localhost:5001
+
+###5. Access Swagger API Docs
+http://localhost:5001/api-docs
+
+### API Testing via Postman
+All secured routes require a JWT token in the Authorization header.
+
+Format:
+
+Authorization: Bearer <your_token>
+Example endpoints:
+
+POST /api/auth/register – register a new user
+
+POST /api/auth/login – get JWT token
+
+POST /api/car – add a car (admin only)
+
+POST /api/rental – create rental (authenticated users)
+
+POST /api/payment/pay – process a payment
+
+
+
+
+### Author & Usage
+This system was developed as part of the IFN636 – Software Development, Testing and Configuration coursework at Queensland University of Technology.
+
+For academic use only. 
