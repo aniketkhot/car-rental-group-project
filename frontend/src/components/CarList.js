@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axiosConfig";
+import axiosAuth from "../axiosConfig";
 import AddCar from "./AddCar";
 import { Link } from 'react-router-dom';
 import CarCard from './CarCard';
@@ -8,8 +8,8 @@ function CarList() {
   const [cars, setCars] = useState([]);
 
   const fetchCars = () => {
-    axios
-      .get("cars")
+    axiosAuth
+      .get("/car")
       .then((res) => setCars(res.data))
       .catch((err) => console.error("Error fetching cars:", err));
   };
@@ -17,7 +17,7 @@ function CarList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this car?")) {
       try {
-        await axios.delete(`/cars/${id}`);
+        await axiosAuth.delete(`/car/${id}`);
         alert("Car deleted successfully");
         fetchCars(); // refresh the list
       } catch (err) {
